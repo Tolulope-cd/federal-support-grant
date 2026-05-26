@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,21 +27,37 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:#f1f5f9;overf
 .login-group label{font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:6px}
 .login-group input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:5px;font-size:15px;font-family:inherit;transition:all .2s}
 .login-group input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,58,107,0.1)}
-.login-btn{width:100%;background:var(--navy);color:var(--white);font-size:15px;font-weight:700;padding:14px;border:none;border-radius:5px;cursor:pointer;font-family:inherit;margin-top:8px;transition:all .2s}
-.login-btn:hover{background:var(--blue)}
+.login-btn{width:100%;background:var(--navy);color:var(--white);font-size:15px;font-weight:700;padding:14px;border:none;border-radius:5px;cursor:pointer;font-family:inherit;margin-top:8px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.login-btn:hover:not(:disabled){background:var(--blue)}
+.login-btn:disabled{opacity:.6;cursor:not-allowed}
 .login-error{background:#fef2f2;border:1px solid #fca5a5;border-radius:4px;padding:10px 14px;font-size:13px;color:var(--red);margin-top:12px;display:none;text-align:center}
 .login-badge{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:var(--gray);margin-top:20px}
 .login-dot{width:6px;height:6px;background:#22c55e;border-radius:50%}
+.lock-notice{background:#eff6ff;border:1px solid #bfdbfe;border-radius:4px;padding:10px 14px;font-size:12px;color:#1e40af;margin-top:10px;text-align:center;display:none}
+
+/* RATE LIMIT WARNING */
+.rate-warning{background:#fef9c3;border:1px solid #fde047;border-radius:4px;padding:10px 14px;font-size:12.5px;color:#854d0e;margin-top:10px;text-align:center;display:none}
+
+/* SPINNER */
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:var(--white);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* FORGOT PASSWORD */
+.forgot-link{display:block;text-align:center;font-size:12px;color:var(--blue);margin-top:14px;cursor:pointer;text-decoration:underline}
+.forgot-link:hover{color:var(--navy)}
+
+/* RESET FORM */
+.reset-form{display:none}
 
 /* DASHBOARD */
 .dashboard{display:none}
-.topbar{background:var(--navy);border-bottom:3px solid var(--gold);padding:0}
+.topbar{background:var(--navy);border-bottom:3px solid var(--gold)}
 .topbar-inner{max-width:1400px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.topbar-logo{display:flex;align-items:center;gap:12px}
 .topbar-logo strong{font-family:'Playfair Display',serif;font-size:17px;color:var(--white)}
-.topbar-logo span{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase}
+.topbar-logo span{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;display:block}
 .topbar-right{display:flex;align-items:center;gap:16px}
 .admin-badge{background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:var(--gold);font-size:11px;font-weight:700;padding:4px 12px;border-radius:3px;letter-spacing:.8px;text-transform:uppercase}
+.admin-email{font-size:12px;color:rgba(255,255,255,0.5)}
 .logout-btn{background:transparent;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.15);font-size:12px;padding:6px 14px;border-radius:4px;cursor:pointer;font-family:inherit;transition:all .2s}
 .logout-btn:hover{color:var(--white);border-color:rgba(255,255,255,0.4)}
 
@@ -61,18 +76,16 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:#f1f5f9;overf
 
 /* MAIN */
 .main-area{max-width:1400px;margin:0 auto;padding:24px 28px}
-
-/* TOOLBAR */
 .toolbar{background:var(--white);border-radius:8px;border:1px solid var(--border);padding:16px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
 .search-wrap{position:relative;flex:1;min-width:220px}
 .search-wrap input{width:100%;padding:9px 14px 9px 36px;border:1.5px solid var(--border);border-radius:5px;font-size:14px;font-family:inherit;transition:all .2s}
 .search-wrap input:focus{outline:none;border-color:var(--blue)}
 .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--gray);font-size:14px}
-.toolbar select{padding:9px 32px 9px 12px;border:1.5px solid var(--border);border-radius:5px;font-size:13px;font-family:inherit;color:var(--dark);background:var(--white);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;cursor:pointer;transition:border .2s}
+.toolbar select{padding:9px 32px 9px 12px;border:1.5px solid var(--border);border-radius:5px;font-size:13px;font-family:inherit;color:var(--dark);background:var(--white);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;cursor:pointer}
 .toolbar select:focus{outline:none;border-color:var(--blue)}
-.refresh-btn{background:var(--navy);color:var(--white);border:none;padding:9px 18px;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;transition:background .2s}
+.refresh-btn{background:var(--navy);color:var(--white);border:none;padding:9px 18px;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px}
 .refresh-btn:hover{background:var(--blue)}
-.export-btn{background:var(--white);color:var(--green);border:1.5px solid var(--green);padding:9px 18px;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;transition:all .2s}
+.export-btn{background:var(--white);color:var(--green);border:1.5px solid var(--green);padding:9px 18px;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
 .export-btn:hover{background:#f0fdf4}
 .record-count{font-size:12px;color:var(--gray);margin-left:auto;white-space:nowrap}
 
@@ -97,12 +110,9 @@ tbody td:first-child{padding-left:20px}
 .status-pill.approved{background:#dcfce7;color:var(--approved)}
 .status-pill.rejected{background:#fee2e2;color:var(--rejected)}
 .status-pill.review{background:#dbeafe;color:var(--review)}
-.status-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
 .no-data{text-align:center;padding:60px 20px;color:var(--gray)}
-.no-data-icon{font-size:48px;margin-bottom:12px}
 .loading-row td{text-align:center;padding:40px;color:var(--gray)}
 .spinner-sm{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto}
-@keyframes spin{to{transform:rotate(360deg)}}
 
 /* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
@@ -124,16 +134,14 @@ tbody td:first-child{padding-left:20px}
 .detail-item p{font-size:14px;color:var(--dark);font-weight:500;line-height:1.4}
 .detail-item.full{grid-column:1/-1}
 .detail-item p.amount{font-size:20px;font-weight:700;color:var(--green)}
-.credit-display{display:flex;align-items:center;gap:8px}
+.credit-display{display:flex;align-items:center;gap:8px;margin-top:6px}
 .credit-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
-.credit-fill{height:100%;border-radius:4px;transition:width .6s}
+.credit-fill{height:100%;border-radius:4px}
 .credit-fill.poor{background:#dc2626;width:20%}
 .credit-fill.fair{background:#ea580c;width:40%}
 .credit-fill.good{background:#ca8a04;width:60%}
 .credit-fill.very-good{background:#16a34a;width:80%}
 .credit-fill.exceptional{background:#0369a1;width:100%}
-
-/* STATUS UPDATE */
 .status-update{background:var(--off);border:1px solid var(--border);border-radius:8px;padding:20px;margin-top:4px}
 .status-update h4{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px}
 .status-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
@@ -151,18 +159,12 @@ tbody td:first-child{padding-left:20px}
 .save-btn{background:var(--navy);color:var(--white);border:none;padding:10px 24px;border-radius:5px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s}
 .save-btn:hover{background:var(--blue)}
 .save-success{font-size:12px;color:var(--green);margin-left:10px;display:none}
-
-@media(max-width:768px){
-  .stats-grid{grid-template-columns:1fr 1fr}
-  .detail-grid,.detail-grid-3{grid-template-columns:1fr}
-  .stat-card{padding:16px}
-  .modal-body{padding:20px}
-}
+@media(max-width:768px){.stats-grid{grid-template-columns:1fr 1fr}.detail-grid,.detail-grid-3{grid-template-columns:1fr}.modal-body{padding:20px}}
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN -->
 <div class="login-wrap" id="loginWrap">
   <div class="login-card">
     <svg class="login-seal" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -179,72 +181,72 @@ tbody td:first-child{padding-left:20px}
     </svg>
     <h1>Admin Portal</h1>
     <p>Federal Support Grant · GVN Internal Access</p>
-    <div class="login-group">
-      <label>Admin Username</label>
-      <input type="text" id="loginUser" placeholder="Enter username" autocomplete="off">
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+      <div class="login-group">
+        <label>Admin Email</label>
+        <input type="email" id="loginEmail" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="login-group">
+        <label>Password</label>
+        <input type="password" id="loginPass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <button class="login-btn" id="loginBtn" onclick="doLogin()">
+        <span id="loginBtnText">Access Dashboard →</span>
+      </button>
+      <div class="login-error" id="loginError"></div>
+      <div class="rate-warning" id="rateWarning"></div>
+      <div class="lock-notice" id="lockNotice"></div>
+      <span class="forgot-link" onclick="showReset()">Forgot password? Reset via email</span>
     </div>
-    <div class="login-group">
-      <label>Password</label>
-      <input type="password" id="loginPass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
+
+    <!-- RESET FORM -->
+    <div class="reset-form" id="resetForm">
+      <div class="login-group">
+        <label>Your Admin Email</label>
+        <input type="email" id="resetEmail" placeholder="your@email.com">
+      </div>
+      <button class="login-btn" onclick="doReset()">Send Reset Link →</button>
+      <div class="login-error" id="resetMsg" style="background:#f0fdf4;border-color:#86efac;color:#15803d"></div>
+      <span class="forgot-link" onclick="showLogin()">← Back to Login</span>
     </div>
-    <button class="login-btn" onclick="doLogin()">Access Dashboard →</button>
-    <div class="login-error" id="loginError">⚠ Incorrect credentials. Access denied.</div>
-    <div class="login-badge"><span class="login-dot"></span> Secure Admin Access · GVN Portal</div>
+
+    <div class="login-badge"><span class="login-dot"></span> Supabase Auth · Encrypted · GVN Secure</div>
   </div>
 </div>
 
 <!-- DASHBOARD -->
 <div class="dashboard" id="dashWrap">
-
-  <!-- TOPBAR -->
   <div class="topbar">
     <div class="topbar-inner">
       <div class="topbar-logo">
-        <div>
-          <strong>Federal Support Grant — Admin</strong><br>
-          <span>GVN Internal Dashboard · FSG-2025-001</span>
-        </div>
+        <strong>Federal Support Grant — Admin</strong>
+        <span>GVN Internal Dashboard · FSG-2025-001</span>
       </div>
       <div class="topbar-right">
         <div class="admin-badge">🔒 Admin Access</div>
-        <span style="font-size:12px;color:rgba(255,255,255,0.4)" id="adminName"></span>
+        <span class="admin-email" id="adminEmail"></span>
         <button class="logout-btn" onclick="doLogout()">Logout</button>
       </div>
     </div>
   </div>
 
-  <!-- STATS -->
   <div class="stats-wrap">
     <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon total">📋</div>
-        <div><div class="stat-num" id="statTotal">—</div><div class="stat-label">Total Applications</div></div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon pending">⏳</div>
-        <div><div class="stat-num" id="statPending">—</div><div class="stat-label">Pending Review</div></div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon approved">✅</div>
-        <div><div class="stat-num" id="statApproved">—</div><div class="stat-label">Approved</div></div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon rejected">❌</div>
-        <div><div class="stat-num" id="statRejected">—</div><div class="stat-label">Rejected</div></div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon amount">💰</div>
-        <div><div class="stat-num" id="statAmount">—</div><div class="stat-label">Total Requested (USD)</div></div>
-      </div>
+      <div class="stat-card"><div class="stat-icon total">📋</div><div><div class="stat-num" id="statTotal">—</div><div class="stat-label">Total Applications</div></div></div>
+      <div class="stat-card"><div class="stat-icon pending">⏳</div><div><div class="stat-num" id="statPending">—</div><div class="stat-label">Pending Review</div></div></div>
+      <div class="stat-card"><div class="stat-icon approved">✅</div><div><div class="stat-num" id="statApproved">—</div><div class="stat-label">Approved</div></div></div>
+      <div class="stat-card"><div class="stat-icon rejected">❌</div><div><div class="stat-num" id="statRejected">—</div><div class="stat-label">Rejected</div></div></div>
+      <div class="stat-card"><div class="stat-icon amount">💰</div><div><div class="stat-num" id="statAmount">—</div><div class="stat-label">Total Requested</div></div></div>
     </div>
   </div>
 
-  <!-- MAIN TABLE AREA -->
   <div class="main-area">
     <div class="toolbar">
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
-        <input type="text" id="searchInput" placeholder="Search by name, email, reference, state..." oninput="filterTable()">
+        <input type="text" id="searchInput" placeholder="Search by name, email, reference..." oninput="filterTable()">
       </div>
       <select id="filterStatus" onchange="filterTable()">
         <option value="">All Statuses</option>
@@ -269,19 +271,12 @@ tbody td:first-child{padding-left:20px}
 
     <div class="table-card">
       <div class="table-wrap">
-        <table id="appTable">
+        <table>
           <thead>
             <tr>
-              <th>Reference</th>
-              <th>Applicant</th>
-              <th>Email</th>
-              <th>State / Country</th>
-              <th>Category</th>
-              <th>Amount Requested</th>
-              <th>Credit Score</th>
-              <th>Total Debt</th>
-              <th>Status</th>
-              <th>Submitted</th>
+              <th>Reference</th><th>Applicant</th><th>Email</th><th>State</th>
+              <th>Category</th><th>Amount</th><th>Credit Score</th><th>Total Debt</th>
+              <th>Status</th><th>Submitted</th>
             </tr>
           </thead>
           <tbody id="tableBody">
@@ -293,19 +288,17 @@ tbody td:first-child{padding-left:20px}
   </div>
 </div>
 
-<!-- APPLICATION DETAIL MODAL -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
-  <div class="modal" id="modalBox">
+  <div class="modal">
     <div class="modal-header">
       <div>
-        <h3 id="modalName">Applicant Name</h3>
-        <div class="modal-header-ref" id="modalRef">FSG-XXXXXXXX</div>
+        <h3 id="modalName">Applicant</h3>
+        <div class="modal-header-ref" id="modalRef"></div>
       </div>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
-    <div class="modal-body" id="modalBody">
-      <!-- Populated by JS -->
-    </div>
+    <div class="modal-body" id="modalBody"></div>
   </div>
 </div>
 
@@ -316,38 +309,160 @@ const db = createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN4anRhbXBka29sbGFzcGxtendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3NjEwNDcsImV4cCI6MjA5NTMzNzA0N30.a56AwkIj0PvSXuPn1teDAjgDLp-Oi-ghieqVXVOibQQ'
 )
 
-// ── CREDENTIALS (change these to your own) ──
-const ADMINS = {
-  'admin': 'FSG@2025!GVN',
-  'commissioner': 'Grant#2025'
-}
-
 let allApplications = []
 let currentApp = null
 let selectedStatus = ''
 
-// ── LOGIN ──
-function doLogin() {
-  const user = document.getElementById('loginUser').value.trim()
-  const pass = document.getElementById('loginPass').value
-  const err  = document.getElementById('loginError')
-  if (ADMINS[user] && ADMINS[user] === pass) {
-    err.style.display = 'none'
-    document.getElementById('loginWrap').style.display = 'none'
-    document.getElementById('dashWrap').style.display = 'block'
-    document.getElementById('adminName').textContent = user
-    loadApplications()
-  } else {
-    err.style.display = 'block'
-    document.getElementById('loginPass').value = ''
-  }
+// ── RATE LIMITING: max 5 login attempts then 15 min lockout ──
+const RATE_KEY = 'fsg_login_attempts'
+const LOCK_KEY = 'fsg_login_lockout'
+const MAX_ATTEMPTS = 5
+const LOCKOUT_MS = 15 * 60 * 1000
+
+function getAttempts() { return parseInt(localStorage.getItem(RATE_KEY) || '0') }
+function getLockout()  { return parseInt(localStorage.getItem(LOCK_KEY)  || '0') }
+
+function isLockedOut() {
+  const lockTime = getLockout()
+  if (!lockTime) return false
+  if (Date.now() - lockTime < LOCKOUT_MS) return true
+  localStorage.removeItem(RATE_KEY)
+  localStorage.removeItem(LOCK_KEY)
+  return false
 }
 
-function doLogout() {
+function recordAttempt() {
+  const attempts = getAttempts() + 1
+  localStorage.setItem(RATE_KEY, attempts)
+  if (attempts >= MAX_ATTEMPTS) {
+    localStorage.setItem(LOCK_KEY, Date.now())
+  }
+  return attempts
+}
+
+function clearAttempts() {
+  localStorage.removeItem(RATE_KEY)
+  localStorage.removeItem(LOCK_KEY)
+}
+
+function getRemainingLockout() {
+  const lockTime = getLockout()
+  if (!lockTime) return 0
+  const remaining = LOCKOUT_MS - (Date.now() - lockTime)
+  return Math.max(0, Math.ceil(remaining / 60000))
+}
+
+// ── CHECK SESSION ON LOAD ──
+window.addEventListener('load', async () => {
+  const { data: { session } } = await db.auth.getSession()
+  if (session) {
+    showDashboard(session.user.email)
+  }
+  if (isLockedOut()) {
+    showLockout()
+  }
+})
+
+// ── LOGIN ──
+async function doLogin() {
+  if (isLockedOut()) { showLockout(); return }
+
+  const email   = document.getElementById('loginEmail').value.trim()
+  const pass    = document.getElementById('loginPass').value
+  const errEl   = document.getElementById('loginError')
+  const rateEl  = document.getElementById('rateWarning')
+  const btn     = document.getElementById('loginBtn')
+  const btnText = document.getElementById('loginBtnText')
+
+  errEl.style.display  = 'none'
+  rateEl.style.display = 'none'
+
+  if (!email || !pass) {
+    errEl.textContent = '⚠ Please enter your email and password.'
+    errEl.style.display = 'block'
+    return
+  }
+
+  btn.disabled = true
+  btnText.innerHTML = '<div class="spinner" style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite"></div>'
+
+  const { data, error } = await db.auth.signInWithPassword({ email, password: pass })
+
+  if (error) {
+    btn.disabled = false
+    btnText.textContent = 'Access Dashboard →'
+    const attempts = recordAttempt()
+    const remaining = MAX_ATTEMPTS - attempts
+
+    if (isLockedOut()) {
+      showLockout()
+    } else {
+      errEl.textContent = '⚠ Invalid credentials. Access denied.'
+      errEl.style.display = 'block'
+      if (remaining <= 2 && remaining > 0) {
+        rateEl.textContent = `⚠ Warning: ${remaining} attempt${remaining===1?'':'s'} remaining before 15-minute lockout.`
+        rateEl.style.display = 'block'
+      }
+    }
+    return
+  }
+
+  clearAttempts()
+  showDashboard(data.user.email)
+}
+
+function showLockout() {
+  const mins = getRemainingLockout()
+  const lockEl = document.getElementById('lockNotice')
+  const btn = document.getElementById('loginBtn')
+  lockEl.textContent = `🔒 Account temporarily locked. Too many failed attempts. Try again in ${mins} minute${mins===1?'':'s'}.`
+  lockEl.style.display = 'block'
+  if (btn) btn.disabled = true
+}
+
+function showDashboard(email) {
+  document.getElementById('loginWrap').style.display = 'none'
+  document.getElementById('dashWrap').style.display  = 'block'
+  document.getElementById('adminEmail').textContent  = email
+  loadApplications()
+}
+
+// ── LOGOUT ──
+async function doLogout() {
+  await db.auth.signOut()
   document.getElementById('loginWrap').style.display = 'flex'
-  document.getElementById('dashWrap').style.display = 'none'
-  document.getElementById('loginUser').value = ''
-  document.getElementById('loginPass').value = ''
+  document.getElementById('dashWrap').style.display  = 'none'
+  document.getElementById('loginEmail').value = ''
+  document.getElementById('loginPass').value  = ''
+  document.getElementById('loginBtn').disabled = false
+  document.getElementById('loginBtnText').textContent = 'Access Dashboard →'
+  document.getElementById('loginError').style.display  = 'none'
+  document.getElementById('lockNotice').style.display  = 'none'
+  document.getElementById('rateWarning').style.display = 'none'
+}
+
+// ── FORGOT PASSWORD ──
+function showReset() {
+  document.getElementById('loginForm').style.display = 'none'
+  document.getElementById('resetForm').style.display = 'block'
+}
+function showLogin() {
+  document.getElementById('loginForm').style.display = 'block'
+  document.getElementById('resetForm').style.display = 'none'
+}
+async function doReset() {
+  const email = document.getElementById('resetEmail').value.trim()
+  const msgEl = document.getElementById('resetMsg')
+  if (!email) return
+  const { error } = await db.auth.resetPasswordForEmail(email)
+  msgEl.style.display = 'block'
+  if (error) {
+    msgEl.style.background = '#fef2f2'
+    msgEl.style.color = '#b91c1c'
+    msgEl.textContent = '⚠ Could not send reset email. Check the address.'
+  } else {
+    msgEl.textContent = '✓ Reset link sent to your email. Check your inbox.'
+  }
 }
 
 // ── LOAD DATA ──
@@ -357,8 +472,9 @@ async function loadApplications() {
     .from('applications')
     .select('*')
     .order('submitted_at', { ascending: false })
+
   if (error) {
-    document.getElementById('tableBody').innerHTML = '<tr><td colspan="10" style="text-align:center;padding:40px;color:#b91c1c">⚠ Error loading data: ' + error.message + '</td></tr>'
+    document.getElementById('tableBody').innerHTML = `<tr><td colspan="10" style="text-align:center;padding:40px;color:#b91c1c">⚠ Error: ${error.message}</td></tr>`
     return
   }
   allApplications = data || []
@@ -366,85 +482,77 @@ async function loadApplications() {
   renderTable(allApplications)
 }
 
-// ── STATS ──
 function updateStats() {
   const total    = allApplications.length
-  const pending  = allApplications.filter(a => a.status === 'pending').length
+  const pending  = allApplications.filter(a => (a.status||'pending') === 'pending').length
   const approved = allApplications.filter(a => a.status === 'approved').length
   const rejected = allApplications.filter(a => a.status === 'rejected').length
-  const totalAmt = allApplications.reduce((sum, a) => sum + (parseFloat(a.amount_requested) || 0), 0)
+  const amt      = allApplications.reduce((s,a) => s + (parseFloat(a.amount_requested)||0), 0)
   document.getElementById('statTotal').textContent    = total
   document.getElementById('statPending').textContent  = pending
   document.getElementById('statApproved').textContent = approved
   document.getElementById('statRejected').textContent = rejected
-  document.getElementById('statAmount').textContent   = '$' + (totalAmt/1000000).toFixed(1) + 'M'
+  document.getElementById('statAmount').textContent   = '$' + (amt/1000000).toFixed(1) + 'M'
 }
 
-// ── RENDER TABLE ──
 function renderTable(data) {
-  const body = document.getElementById('tableBody')
   document.getElementById('recordCount').textContent = data.length + ' records'
+  const body = document.getElementById('tableBody')
   if (!data.length) {
-    body.innerHTML = '<tr><td colspan="10"><div class="no-data"><div class="no-data-icon">📭</div><p>No applications found</p></div></td></tr>'
+    body.innerHTML = '<tr><td colspan="10"><div class="no-data" style="text-align:center;padding:60px;color:#6b7280"><div style="font-size:48px;margin-bottom:12px">📭</div><p>No applications found</p></div></td></tr>'
     return
   }
   body.innerHTML = data.map(a => `
     <tr onclick="openModal('${a.id}')">
-      <td><span class="td-ref">${a.reference_number || '—'}</span></td>
-      <td><span class="td-name">${a.first_name || ''} ${a.last_name || ''}</span></td>
-      <td style="font-size:13px">${a.email || '—'}</td>
-      <td style="font-size:13px">${a.state || '—'}</td>
-      <td style="font-size:13px">${a.grant_category || '—'}</td>
+      <td><span class="td-ref">${a.reference_number||'—'}</span></td>
+      <td><span class="td-name">${a.first_name||''} ${a.middle_name||''} ${a.last_name||''}</span></td>
+      <td style="font-size:13px">${a.email||'—'}</td>
+      <td style="font-size:13px">${a.state||'—'}</td>
+      <td style="font-size:13px">${a.grant_category||'—'}</td>
       <td><span class="td-amount">$${(parseFloat(a.amount_requested)||0).toLocaleString('en-US')}</span></td>
-      <td style="font-size:12px">${a.credit_score_range || '—'}</td>
-      <td style="font-size:12px">${a.total_debt || '—'}</td>
-      <td>${statusPill(a.status)}</td>
-      <td><span class="td-date">${formatDate(a.submitted_at)}</span></td>
-    </tr>
-  `).join('')
+      <td style="font-size:12px">${a.credit_score_range||'—'}</td>
+      <td style="font-size:12px">${a.total_debt||'—'}</td>
+      <td>${pill(a.status)}</td>
+      <td><span class="td-date">${fmtDate(a.submitted_at)}</span></td>
+    </tr>`).join('')
 }
 
-function statusPill(s) {
-  const map = { pending:'⏳ Pending', approved:'✅ Approved', rejected:'❌ Rejected', review:'🔍 Under Review' }
-  const cls = s || 'pending'
-  return `<span class="status-pill ${cls}">${map[cls] || '⏳ Pending'}</span>`
+function pill(s) {
+  const map = {pending:'⏳ Pending',approved:'✅ Approved',rejected:'❌ Rejected',review:'🔍 Under Review'}
+  const c = s||'pending'
+  return `<span class="status-pill ${c}">${map[c]||'⏳ Pending'}</span>`
+}
+function fmtDate(d) {
+  if(!d) return '—'
+  return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
 }
 
-function formatDate(d) {
-  if (!d) return '—'
-  return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-}
-
-// ── FILTER ──
 function filterTable() {
-  const q    = document.getElementById('searchInput').value.toLowerCase()
-  const st   = document.getElementById('filterStatus').value
-  const cat  = document.getElementById('filterCategory').value
-  const filtered = allApplications.filter(a => {
-    const matchQ = !q || [a.reference_number,a.first_name,a.last_name,a.email,a.state,a.grant_category].some(v => (v||'').toLowerCase().includes(q))
-    const matchS = !st  || (a.status||'pending') === st
-    const matchC = !cat || a.grant_category === cat
-    return matchQ && matchS && matchC
+  const q   = document.getElementById('searchInput').value.toLowerCase()
+  const st  = document.getElementById('filterStatus').value
+  const cat = document.getElementById('filterCategory').value
+  const f   = allApplications.filter(a => {
+    const mq = !q || [a.reference_number,a.first_name,a.middle_name,a.last_name,a.email,a.state,a.grant_category].some(v=>(v||'').toLowerCase().includes(q))
+    const ms = !st  || (a.status||'pending') === st
+    const mc = !cat || a.grant_category === cat
+    return mq && ms && mc
   })
-  renderTable(filtered)
+  renderTable(f)
 }
 
-// ── MODAL ──
 function openModal(id) {
   const a = allApplications.find(x => String(x.id) === String(id))
   if (!a) return
   currentApp = a
   selectedStatus = a.status || 'pending'
-  document.getElementById('modalName').textContent = (a.first_name || '') + ' ' + (a.last_name || '')
+  document.getElementById('modalName').textContent = [a.first_name,a.middle_name,a.last_name].filter(Boolean).join(' ')
   document.getElementById('modalRef').textContent  = a.reference_number || ''
-
-  const creditClass = getCreditClass(a.credit_score_range)
-
+  const cc = getCreditClass(a.credit_score_range)
   document.getElementById('modalBody').innerHTML = `
     <div class="modal-section">
       <div class="modal-section-title">Personal Information</div>
       <div class="detail-grid">
-        <div class="detail-item"><label>Full Name</label><p>${a.first_name||''} ${a.last_name||''}</p></div>
+        <div class="detail-item"><label>Full Name</label><p>${[a.first_name,a.middle_name,a.last_name].filter(Boolean).join(' ')}</p></div>
         <div class="detail-item"><label>Date of Birth</label><p>${a.date_of_birth||'—'}</p></div>
         <div class="detail-item"><label>Email</label><p>${a.email||'—'}</p></div>
         <div class="detail-item"><label>Phone</label><p>${a.phone||'—'}</p></div>
@@ -453,92 +561,81 @@ function openModal(id) {
         <div class="detail-item full"><label>Address</label><p>${a.address||'—'}</p></div>
       </div>
     </div>
-
     <div class="modal-section">
       <div class="modal-section-title">Grant Details</div>
       <div class="detail-grid">
         <div class="detail-item"><label>Category</label><p>${a.grant_category||'—'}</p></div>
         <div class="detail-item"><label>Amount Requested</label><p class="amount">$${(parseFloat(a.amount_requested)||0).toLocaleString('en-US')}</p></div>
         <div class="detail-item"><label>Annual Income</label><p>${a.income_range||'—'}</p></div>
-        <div class="detail-item"><label>Submitted</label><p>${formatDate(a.submitted_at)}</p></div>
+        <div class="detail-item"><label>Submitted</label><p>${fmtDate(a.submitted_at)}</p></div>
         <div class="detail-item full"><label>Purpose of Grant</label><p>${a.purpose||'—'}</p></div>
       </div>
     </div>
-
     <div class="modal-section">
       <div class="modal-section-title">Financial Profile</div>
       <div class="detail-grid-3">
         <div class="detail-item full">
           <label>Credit Score Range</label>
-          <div class="credit-display" style="margin-top:6px">
-            <p style="min-width:120px;font-weight:700">${a.credit_score_range||'Not provided'}</p>
-            <div class="credit-bar"><div class="credit-fill ${creditClass}"></div></div>
+          <div class="credit-display">
+            <p style="min-width:140px;font-weight:700">${a.credit_score_range||'Not provided'}</p>
+            <div class="credit-bar"><div class="credit-fill ${cc}"></div></div>
           </div>
         </div>
-        <div class="detail-item"><label>Number of Credit Cards</label><p>${a.num_credit_cards||'—'}</p></div>
+        <div class="detail-item"><label>Credit Cards</label><p>${a.num_credit_cards||'—'}</p></div>
         <div class="detail-item"><label>Credit Card Debt</label><p>${a.credit_card_debt||'—'}</p></div>
-        <div class="detail-item"><label>Total Debt / Loans</label><p>${a.total_debt||'—'}</p></div>
-        <div class="detail-item"><label>Monthly Debt Payments</label><p>${a.monthly_debt_payments||'—'}</p></div>
-        <div class="detail-item"><label>Bankruptcy History</label><p>${a.bankruptcy_history||'—'}</p></div>
-        <div class="detail-item"><label>Housing Status</label><p>${a.housing_status||'—'}</p></div>
+        <div class="detail-item"><label>Total Debt</label><p>${a.total_debt||'—'}</p></div>
+        <div class="detail-item"><label>Monthly Payments</label><p>${a.monthly_debt_payments||'—'}</p></div>
+        <div class="detail-item"><label>Bankruptcy</label><p>${a.bankruptcy_history||'—'}</p></div>
+        <div class="detail-item"><label>Housing</label><p>${a.housing_status||'—'}</p></div>
         <div class="detail-item"><label>Late Payments</label><p>${a.late_payments||'—'}</p></div>
       </div>
     </div>
-
     <div class="modal-section">
       <div class="modal-section-title">Application Management</div>
       <div class="status-update">
-        <h4>Update Application Status</h4>
+        <h4>Update Status</h4>
         <div class="status-btns">
           <button class="status-btn pending ${selectedStatus==='pending'?'active':''}" onclick="setStatus('pending')">⏳ Pending</button>
           <button class="status-btn review ${selectedStatus==='review'?'active':''}" onclick="setStatus('review')">🔍 Under Review</button>
           <button class="status-btn approved ${selectedStatus==='approved'?'active':''}" onclick="setStatus('approved')">✅ Approve</button>
           <button class="status-btn rejected ${selectedStatus==='rejected'?'active':''}" onclick="setStatus('rejected')">❌ Reject</button>
         </div>
-        <textarea class="notes-area" id="adminNotes" placeholder="Add internal notes about this application...">${a.admin_notes||''}</textarea>
+        <textarea class="notes-area" id="adminNotes" placeholder="Internal notes about this application...">${a.admin_notes||''}</textarea>
         <button class="save-btn" onclick="saveStatus()">Save Changes</button>
-        <span class="save-success" id="saveSuccess">✓ Saved successfully</span>
+        <span class="save-success" id="saveSuccess">✓ Saved</span>
       </div>
-    </div>
-  `
+    </div>`
   document.getElementById('modalOverlay').classList.add('open')
 }
 
-function getCreditClass(range) {
-  if (!range) return ''
-  if (range.includes('300')) return 'poor'
-  if (range.includes('580')) return 'fair'
-  if (range.includes('670')) return 'good'
-  if (range.includes('740')) return 'very-good'
-  if (range.includes('800')) return 'exceptional'
+function getCreditClass(r) {
+  if(!r) return ''
+  if(r.includes('300')) return 'poor'
+  if(r.includes('580')) return 'fair'
+  if(r.includes('670')) return 'good'
+  if(r.includes('740')) return 'very-good'
+  if(r.includes('800')) return 'exceptional'
   return 'good'
 }
 
 function setStatus(s) {
   selectedStatus = s
   document.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'))
-  document.querySelectorAll('.status-btn.' + s).forEach(b => b.classList.add('active'))
+  document.querySelectorAll('.status-btn.'+s).forEach(b => b.classList.add('active'))
 }
 
 async function saveStatus() {
-  if (!currentApp) return
+  if(!currentApp) return
   const notes = document.getElementById('adminNotes').value
   const { error } = await db.from('applications').update({
-    status: selectedStatus,
-    admin_notes: notes,
-    reviewed_at: new Date().toISOString()
+    status:selectedStatus, admin_notes:notes, reviewed_at:new Date().toISOString()
   }).eq('id', currentApp.id)
-
-  if (!error) {
-    const idx = allApplications.findIndex(a => a.id === currentApp.id)
-    if (idx > -1) {
-      allApplications[idx].status = selectedStatus
-      allApplications[idx].admin_notes = notes
-    }
-    updateStats()
-    filterTable()
+  if(!error) {
+    const i = allApplications.findIndex(a => a.id === currentApp.id)
+    if(i>-1){allApplications[i].status=selectedStatus;allApplications[i].admin_notes=notes}
+    updateStats(); filterTable()
     document.getElementById('saveSuccess').style.display = 'inline'
-    setTimeout(() => document.getElementById('saveSuccess').style.display = 'none', 2500)
+    setTimeout(() => document.getElementById('saveSuccess').style.display='none', 2500)
   }
 }
 
@@ -547,27 +644,22 @@ function closeModal() {
   currentApp = null
 }
 
-// ── EXPORT CSV ──
 function exportCSV() {
-  if (!allApplications.length) { alert('No data to export.'); return }
-  const headers = ['Reference','First Name','Last Name','Email','Phone','State','Address','Applicant Type','Category','Amount','Income','Credit Score','Credit Cards','Credit Card Debt','Total Debt','Monthly Payments','Bankruptcy','Housing','Late Payments','Status','Submitted']
+  if(!allApplications.length){alert('No data.');return}
+  const h = ['Reference','First','Middle','Last','Email','Phone','State','Address','Type','Category','Amount','Income','Credit','Cards','CC Debt','Total Debt','Monthly','Bankruptcy','Housing','Late Payments','Status','Submitted']
   const rows = allApplications.map(a => [
-    a.reference_number,a.first_name,a.last_name,a.email,a.phone,a.state,a.address,
-    a.applicant_type,a.grant_category,a.amount_requested,a.income_range,
-    a.credit_score_range,a.num_credit_cards,a.credit_card_debt,a.total_debt,
-    a.monthly_debt_payments,a.bankruptcy_history,a.housing_status,a.late_payments,
-    a.status,a.submitted_at
-  ].map(v => '"'+(v||'').toString().replace(/"/g,'""')+'"'))
-  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n')
-  const blob = new Blob([csv], {type:'text/csv'})
-  const url  = URL.createObjectURL(blob)
-  const a    = document.createElement('a')
-  a.href = url; a.download = 'FSG-Applications-' + new Date().toISOString().slice(0,10) + '.csv'
-  a.click(); URL.revokeObjectURL(url)
+    a.reference_number,a.first_name,a.middle_name,a.last_name,a.email,a.phone,a.state,a.address,
+    a.applicant_type,a.grant_category,a.amount_requested,a.income_range,a.credit_score_range,
+    a.num_credit_cards,a.credit_card_debt,a.total_debt,a.monthly_debt_payments,
+    a.bankruptcy_history,a.housing_status,a.late_payments,a.status,a.submitted_at
+  ].map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`))
+  const csv = [h.join(','),...rows.map(r=>r.join(','))].join('\n')
+  const url = URL.createObjectURL(new Blob([csv],{type:'text/csv'}))
+  const el  = Object.assign(document.createElement('a'),{href:url,download:`FSG-${new Date().toISOString().slice(0,10)}.csv`})
+  el.click(); URL.revokeObjectURL(url)
 }
 
-// keyboard shortcut
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal() })
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal() })
 </script>
 </body>
 </html>
