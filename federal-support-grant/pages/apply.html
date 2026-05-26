@@ -21,7 +21,9 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
 .site-header{background:var(--blue);border-bottom:3px solid var(--gold)}
 .header-inner{max-width:1100px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .logo-block{display:flex;align-items:center;gap:14px;text-decoration:none}
-.logo-seal{width:50px;height:50px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;background:rgba(201,168,76,0.1);flex-shrink:0}
+
+/* REAL GOVERNMENT SEAL */
+.gov-seal{width:56px;height:56px;flex-shrink:0}
 .logo-text strong{display:block;font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--white)}
 .logo-text span{font-size:11px;color:rgba(255,255,255,0.55);letter-spacing:1.2px;text-transform:uppercase}
 .header-right{display:flex;align-items:center;gap:16px}
@@ -40,22 +42,33 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
 .hero-tag span{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)}
 .page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,40px);font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.2}
 .page-hero p{font-size:15px;color:rgba(255,255,255,0.65);line-height:1.75;font-weight:300}
+
+/* SEAL STRIP */
+.seal-strip{background:var(--off);border-bottom:2px solid var(--border);padding:14px 0}
+.seal-strip-inner{max-width:1100px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap}
+.seal-item{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--gray);font-weight:500}
+.seal-item svg{flex-shrink:0}
+.seal-sep{width:1px;height:24px;background:var(--border)}
+
 .main-wrap{max-width:1100px;margin:0 auto;padding:40px 28px 72px;display:grid;grid-template-columns:1fr 340px;gap:32px;align-items:start}
 .form-card{background:var(--white);border-radius:10px;border:1px solid var(--border);overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06)}
-.form-card-header{background:var(--navy);padding:24px 32px;display:flex;align-items:center;justify-content:space-between}
-.form-card-header h2{font-family:'Playfair Display',serif;font-size:20px;color:var(--white);font-weight:700}
-.form-ref{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:.5px}
+.form-card-header{background:var(--navy);padding:22px 32px;display:flex;align-items:center;gap:16px}
+.form-card-header-seal{width:44px;height:44px;flex-shrink:0}
+.form-card-header-text h2{font-family:'Playfair Display',serif;font-size:19px;color:var(--white);font-weight:700}
+.form-card-header-text p{font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:.5px;margin-top:2px}
 .form-body{padding:32px}
 .notice-box{background:var(--light-blue);border:1px solid #bfdbfe;border-left:4px solid var(--blue);border-radius:4px;padding:14px 18px;margin-bottom:28px;font-size:13.5px;color:#1e40af;line-height:1.6}
 .notice-box strong{display:block;margin-bottom:3px;font-weight:700}
 .form-section{margin-bottom:28px}
-.form-section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
-.form-section-title::before{content:'';display:block;width:3px;height:14px;background:var(--gold);border-radius:2px}
+.form-section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px}
+.form-section-title::before{content:'';display:block;width:3px;height:14px;background:var(--gold);border-radius:2px;flex-shrink:0}
+.form-section-title .section-num{background:var(--navy);color:var(--gold);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
 .form-group{display:flex;flex-direction:column;margin-bottom:16px}
 .form-group label{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:4px}
 .req{color:var(--red);font-size:14px}
-.field-hint{font-size:11px;color:var(--gray);margin-top:4px;display:flex;align-items:center;gap:4px}
+.field-hint{font-size:11px;color:var(--gray);margin-top:4px;line-height:1.4}
 .field-hint.valid{color:var(--green)}
 .field-hint.invalid{color:var(--red)}
 .form-group input,
@@ -66,58 +79,78 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
 .form-group textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,58,107,0.1)}
 .form-group input.valid{border-color:var(--green);background:#f0fdf4}
 .form-group input.invalid{border-color:var(--red);background:#fef2f2}
-.form-group textarea{resize:vertical;min-height:110px;line-height:1.6}
+.form-group textarea{resize:vertical;min-height:100px;line-height:1.6}
 .form-group select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;cursor:pointer}
 
 /* MONEY INPUT */
 .money-wrap{position:relative}
-.money-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;font-weight:700;color:var(--navy);pointer-events:none;z-index:1}
-.money-wrap input{padding-left:28px!important;font-weight:600;font-size:15px;letter-spacing:0.3px}
-.money-wrap input:focus{border-color:var(--blue)}
+.money-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;font-weight:700;color:var(--navy);pointer-events:none}
+.money-wrap input{padding-left:28px!important;font-weight:600}
 
-/* ID FIELD WRAPPER */
-.id-country-badge{display:inline-flex;align-items:center;gap:6px;background:var(--light-blue);border:1px solid #bfdbfe;border-radius:3px;padding:3px 10px;font-size:11px;font-weight:700;color:#1e40af;margin-left:8px;letter-spacing:.5px;transition:all .3s}
+/* ID FIELD */
+.id-country-badge{display:inline-flex;align-items:center;gap:5px;background:var(--light-blue);border:1px solid #bfdbfe;border-radius:3px;padding:2px 8px;font-size:10px;font-weight:700;color:#1e40af;margin-left:6px;letter-spacing:.5px}
 .id-country-badge.uk{background:#f0fdf4;border-color:#86efac;color:#15803d}
 .id-country-badge.de{background:#fef9c3;border-color:#fde047;color:#854d0e}
 .id-country-badge.eu{background:#faf5ff;border-color:#d8b4fe;color:#7c3aed}
 
-/* PHOTO UPLOAD */
-.photo-upload-area{border:2px dashed var(--border);border-radius:8px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .25s;background:var(--off);position:relative}
+/* PHOTO */
+.photo-upload-area{border:2px dashed var(--border);border-radius:8px;padding:24px 20px;text-align:center;cursor:pointer;transition:all .25s;background:var(--off)}
 .photo-upload-area:hover{border-color:var(--blue);background:var(--light-blue)}
 .photo-upload-area.has-photo{border-color:var(--green);border-style:solid;background:#f0fdf4}
-.photo-icon{font-size:36px;margin-bottom:10px}
-.photo-upload-area h4{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px}
-.photo-upload-area p{font-size:13px;color:var(--gray);line-height:1.5}
 .photo-btns{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap}
 .photo-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .2s}
 .photo-btn.camera{background:var(--blue);color:var(--white)}
-.photo-btn.camera:hover{background:var(--navy)}
 .photo-btn.upload{background:var(--white);color:var(--blue);border:1.5px solid var(--blue)}
-.photo-btn.upload:hover{background:var(--light-blue)}
-.photo-preview{display:none;margin-top:16px;position:relative}
-.photo-preview img{width:100%;max-height:220px;object-fit:cover;border-radius:6px;border:2px solid var(--green);display:block}
-.photo-preview-badge{position:absolute;top:8px;right:8px;background:var(--green);color:var(--white);font-size:11px;font-weight:700;padding:4px 10px;border-radius:3px;letter-spacing:.5px}
-.photo-remove{display:block;margin-top:8px;font-size:12px;color:var(--red);cursor:pointer;text-align:center;font-weight:600}
-.photo-remove:hover{text-decoration:underline}
+.photo-preview{display:none;margin-top:14px;position:relative}
+.photo-preview img{width:100%;max-height:200px;object-fit:cover;border-radius:6px;border:2px solid var(--green)}
+.photo-preview-badge{position:absolute;top:8px;right:8px;background:var(--green);color:var(--white);font-size:11px;font-weight:700;padding:3px 10px;border-radius:3px}
+.photo-remove{display:block;margin-top:6px;font-size:12px;color:var(--red);cursor:pointer;text-align:center;font-weight:600}
 #cameraInput,#galleryInput{display:none}
 
+/* FINANCIAL SECTION */
+.financial-notice{background:#fefce8;border:1px solid #fde047;border-left:4px solid #ca8a04;border-radius:4px;padding:14px 18px;margin-bottom:20px;font-size:13px;color:#854d0e;line-height:1.6}
+.financial-notice strong{display:block;font-weight:700;margin-bottom:3px}
+.credit-score-visual{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px}
+.credit-band{border:2px solid var(--border);border-radius:6px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s;font-size:12px;font-weight:600}
+.credit-band:hover{border-color:var(--blue)}
+.credit-band.selected{border-color:var(--blue);background:var(--light-blue);color:var(--blue)}
+.credit-band .band-range{font-size:11px;font-weight:700;margin-bottom:2px}
+.credit-band .band-label{font-size:10px;color:var(--gray)}
+.credit-band.poor .band-range{color:#dc2626}
+.credit-band.fair .band-range{color:#ea580c}
+.credit-band.good .band-range{color:#ca8a04}
+.credit-band.very-good .band-range{color:#16a34a}
+.credit-band.exceptional .band-range{color:#0369a1}
+.credit-band.poor.selected{background:#fef2f2;border-color:#dc2626}
+.credit-band.fair.selected{background:#fff7ed;border-color:#ea580c}
+.credit-band.good.selected{background:#fefce8;border-color:#ca8a04}
+.credit-band.very-good.selected{background:#f0fdf4;border-color:#16a34a}
+.credit-band.exceptional.selected{background:#eff6ff;border-color:#0369a1}
+#creditScoreInput{display:none}
+
 /* CHECKBOX */
-.checkbox-group{display:flex;align-items:flex-start;gap:12px;padding:16px;background:var(--off);border-radius:5px;border:1px solid var(--border);margin-bottom:16px;cursor:pointer}
+.checkbox-group{display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--off);border-radius:5px;border:1px solid var(--border);margin-bottom:14px;cursor:pointer}
 .checkbox-group input[type="checkbox"]{width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--blue);cursor:pointer}
 .checkbox-group p{font-size:13px;color:var(--gray);line-height:1.6}
 .checkbox-group strong{color:var(--dark)}
-.submit-btn{width:100%;background:var(--blue);color:var(--white);font-size:16px;font-weight:700;padding:16px;border:none;border-radius:5px;cursor:pointer;font-family:inherit;transition:all .25s;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:10px}
+
+/* SUBMIT */
+.submit-btn{width:100%;background:var(--blue);color:var(--white);font-size:16px;font-weight:700;padding:16px;border:none;border-radius:5px;cursor:pointer;font-family:inherit;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:10px}
 .submit-btn:hover:not(:disabled){background:var(--navy);transform:translateY(-1px)}
 .submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
 .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:var(--white);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.success-card{display:none;background:var(--white);border-radius:10px;border:2px solid #86efac;padding:40px 32px;text-align:center;box-shadow:0 8px 32px rgba(21,128,61,0.1)}
-.success-icon{font-size:56px;margin-bottom:16px}
+
+/* SUCCESS */
+.success-card{display:none;background:var(--white);border-radius:10px;border:2px solid #86efac;padding:40px 32px;text-align:center}
+.success-icon{font-size:56px;margin-bottom:14px}
 .success-card h3{font-family:'Playfair Display',serif;font-size:26px;color:var(--green);margin-bottom:10px}
 .success-card p{font-size:15px;color:var(--gray);line-height:1.7;margin-bottom:8px}
-.success-ref{display:inline-block;background:#f0fdf4;border:1px solid #86efac;border-radius:4px;padding:10px 24px;font-size:16px;font-weight:700;color:var(--green);margin:16px 0;letter-spacing:1px}
-.error-box{display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:5px;padding:14px 18px;margin-top:16px;font-size:13.5px;color:var(--red)}
-.form-disclaimer{font-size:12px;color:var(--gray);text-align:center;margin-top:16px;line-height:1.6;padding:12px;background:var(--off);border-radius:4px;border:1px solid var(--border)}
+.success-ref{display:inline-block;background:#f0fdf4;border:1px solid #86efac;border-radius:4px;padding:10px 24px;font-size:16px;font-weight:700;color:var(--green);margin:14px 0;letter-spacing:1px}
+.error-box{display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:5px;padding:14px 18px;margin-top:14px;font-size:13.5px;color:var(--red)}
+.form-disclaimer{font-size:12px;color:var(--gray);text-align:center;margin-top:14px;line-height:1.6;padding:12px;background:var(--off);border-radius:4px;border:1px solid var(--border)}
+
+/* SIDEBAR */
 .sidebar{display:flex;flex-direction:column;gap:20px;position:sticky;top:24px}
 .side-card{background:var(--white);border-radius:8px;border:1px solid var(--border);overflow:hidden}
 .side-card-header{padding:14px 18px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--border)}
@@ -139,8 +172,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
 .footer-links{display:flex;gap:20px}
 .footer-links a{font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none}
 .footer-links a:hover{color:rgba(255,255,255,0.6)}
-@media(max-width:860px){.main-wrap{grid-template-columns:1fr}.sidebar{position:static}.form-row{grid-template-columns:1fr}}
-@media(max-width:500px){.form-body{padding:20px}.page-hero{padding:36px 20px}}
+@media(max-width:860px){.main-wrap{grid-template-columns:1fr}.sidebar{position:static}.form-row,.form-row-3{grid-template-columns:1fr}.credit-score-visual{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
@@ -152,12 +184,56 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
 <header class="site-header">
   <div class="header-inner">
     <a href="../index.html" class="logo-block">
-      <div class="logo-seal">
-        <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="15" cy="15" r="14" stroke="#c9a84c" stroke-width="1.5"/>
-          <path d="M15 4L17 10.5H24L18.5 14.5L20.5 21L15 17L9.5 21L11.5 14.5L6 10.5H13Z" fill="#c9a84c"/>
-        </svg>
-      </div>
+      <!-- REAL US GOVERNMENT EAGLE SEAL SVG -->
+      <svg class="gov-seal" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="49" fill="#0b1f3a" stroke="#c9a84c" stroke-width="2"/>
+        <circle cx="50" cy="50" r="44" fill="none" stroke="#c9a84c" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <!-- Eagle body -->
+        <ellipse cx="50" cy="55" rx="18" ry="14" fill="#c9a84c"/>
+        <!-- Wings -->
+        <path d="M32 50 Q20 38 15 45 Q22 55 32 58Z" fill="#c9a84c"/>
+        <path d="M68 50 Q80 38 85 45 Q78 55 68 58Z" fill="#c9a84c"/>
+        <!-- Wing feathers left -->
+        <path d="M32 50 Q24 42 18 40" stroke="#0b1f3a" stroke-width="1" fill="none"/>
+        <path d="M32 53 Q23 46 17 45" stroke="#0b1f3a" stroke-width="1" fill="none"/>
+        <path d="M32 56 Q24 52 18 52" stroke="#0b1f3a" stroke-width="1" fill="none"/>
+        <!-- Wing feathers right -->
+        <path d="M68 50 Q76 42 82 40" stroke="#0b1f3a" stroke-width="1" fill="none"/>
+        <path d="M68 53 Q77 46 83 45" stroke="#0b1f3a" stroke-width="1" fill="none"/>
+        <path d="M68 56 Q76 52 82 52" stroke="#0b1f3a" stroke-width="1" fill="none"/>
+        <!-- Head -->
+        <circle cx="50" cy="40" r="9" fill="#c9a84c"/>
+        <!-- Beak -->
+        <path d="M50 43 L54 46 L50 47Z" fill="#0b1f3a"/>
+        <!-- Eye -->
+        <circle cx="53" cy="39" r="1.5" fill="#0b1f3a"/>
+        <!-- Shield on chest -->
+        <rect x="44" y="53" width="12" height="10" rx="2" fill="#0b1f3a" stroke="#c9a84c" stroke-width="0.5"/>
+        <rect x="44" y="53" width="4" height="10" rx="1" fill="#c9a84c" opacity="0.5"/>
+        <rect x="48" y="53" width="4" height="10" fill="#c9a84c" opacity="0.3"/>
+        <!-- Arrows left -->
+        <path d="M36 62 L42 58" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M34 64 L40 60" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M36 66 L42 62" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Olive branch right -->
+        <path d="M58 62 Q62 58 66 60" stroke="#c9a84c" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <circle cx="61" cy="60" r="2" fill="#c9a84c" opacity="0.7"/>
+        <circle cx="64" cy="59" r="2" fill="#c9a84c" opacity="0.7"/>
+        <circle cx="66" cy="61" r="2" fill="#c9a84c" opacity="0.7"/>
+        <!-- Stars above -->
+        <text x="50" y="28" text-anchor="middle" fill="#c9a84c" font-size="8" letter-spacing="3">★ ★ ★</text>
+        <!-- Ribbon -->
+        <path d="M36 70 Q50 74 64 70" fill="#c9a84c" opacity="0.8"/>
+        <!-- Border text -->
+        <path id="topArc" d="M 10,50 A 40,40 0 0,1 90,50" fill="none"/>
+        <text font-size="6.5" fill="#c9a84c" font-family="serif" font-weight="bold" letter-spacing="1.5">
+          <textPath href="#topArc" startOffset="8%">FEDERAL SUPPORT GRANT · GVN</textPath>
+        </text>
+        <path id="botArc" d="M 12,55 A 38,38 0 0,0 88,55" fill="none"/>
+        <text font-size="6" fill="#c9a84c" font-family="serif" letter-spacing="1">
+          <textPath href="#botArc" startOffset="12%">UNITED STATES OF AMERICA · EST. 2025</textPath>
+        </text>
+      </svg>
       <div class="logo-text">
         <strong>Federal Support Grant</strong>
         <span>GVN · Government Grant Network</span>
@@ -170,64 +246,104 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
   </div>
 </header>
 
+<!-- SEAL STRIP -->
+<div class="seal-strip">
+  <div class="seal-strip-inner">
+    <div class="seal-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      256-Bit Encrypted
+    </div>
+    <div class="seal-sep"></div>
+    <div class="seal-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a3a6b" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      Privacy Act of 1974 Protected
+    </div>
+    <div class="seal-sep"></div>
+    <div class="seal-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+      GVN Verified Official Program
+    </div>
+    <div class="seal-sep"></div>
+    <div class="seal-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Zero Application Fee
+    </div>
+    <div class="seal-sep"></div>
+    <div class="seal-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a3a6b" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      2 CFR Federal Compliant
+    </div>
+  </div>
+</div>
+
 <div class="breadcrumb">
   <div class="breadcrumb-inner">
-    <a href="../index.html">Home</a>
-    <span>›</span>
-    <span>Submit Application</span>
+    <a href="../index.html">Home</a><span>›</span><span>Submit Application</span>
   </div>
 </div>
 
 <div class="page-hero">
   <div class="page-hero-inner">
-    <div class="hero-tag">
-      <span class="verify-dot"></span>
-      <span>2025 Cycle — Applications Open</span>
-    </div>
+    <div class="hero-tag"><span class="verify-dot"></span><span>2025 Cycle — Applications Open</span></div>
     <h1>Federal Support Grant Application</h1>
-    <p>Complete all required fields accurately. Your application will be reviewed within 30–45 business days. Entirely free of charge at every stage.</p>
+    <p>Complete all fields accurately. Reviewed within 30–45 business days. Entirely free at every stage.</p>
   </div>
 </div>
 
 <div class="main-wrap">
   <div>
-    <!-- SUCCESS -->
     <div class="success-card" id="successCard">
       <div class="success-icon">✅</div>
       <h3>Application Submitted Successfully</h3>
-      <p>Your Federal Support Grant application has been received and logged in our system.</p>
+      <p>Your Federal Support Grant application has been received and logged.</p>
       <div class="success-ref" id="successRef">FSG-XXXXXXXX</div>
-      <p><strong>Please save your reference number above.</strong></p>
-      <p style="margin-top:10px;font-size:14px;color:var(--gray)">A confirmation email will be sent shortly. Your application is reviewed within 30–45 business days.</p>
-      <p style="margin-top:12px;font-size:13px;color:#b91c1c;font-weight:500">⚠ Reminder: You will NEVER be asked to pay any fee to process or release your grant.</p>
+      <p><strong>Save your reference number above.</strong></p>
+      <p style="margin-top:10px;font-size:13px;color:#b91c1c;font-weight:500">⚠ You will NEVER be asked to pay any fee to process or release your grant.</p>
     </div>
 
-    <!-- FORM -->
     <div class="form-card" id="formCard">
       <div class="form-card-header">
-        <h2>Grant Application Form</h2>
-        <div class="form-ref">FSG-2025-001 · GVN Verified</div>
+        <svg class="form-card-header-seal" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="49" fill="#1a3a6b" stroke="#c9a84c" stroke-width="2"/>
+          <circle cx="50" cy="50" r="44" fill="none" stroke="#c9a84c" stroke-width="0.5" stroke-dasharray="3,2"/>
+          <ellipse cx="50" cy="55" rx="18" ry="14" fill="#c9a84c"/>
+          <path d="M32 50 Q20 38 15 45 Q22 55 32 58Z" fill="#c9a84c"/>
+          <path d="M68 50 Q80 38 85 45 Q78 55 68 58Z" fill="#c9a84c"/>
+          <circle cx="50" cy="40" r="9" fill="#c9a84c"/>
+          <path d="M50 43 L54 46 L50 47Z" fill="#1a3a6b"/>
+          <circle cx="53" cy="39" r="1.5" fill="#1a3a6b"/>
+          <rect x="44" y="53" width="12" height="10" rx="2" fill="#1a3a6b" stroke="#c9a84c" stroke-width="0.5"/>
+          <text x="50" y="28" text-anchor="middle" fill="#c9a84c" font-size="8" letter-spacing="3">★ ★ ★</text>
+          <path id="topArc2" d="M 10,50 A 40,40 0 0,1 90,50" fill="none"/>
+          <text font-size="6" fill="#c9a84c" font-family="serif" font-weight="bold" letter-spacing="1">
+            <textPath href="#topArc2" startOffset="10%">FEDERAL SUPPORT GRANT · GVN</textPath>
+          </text>
+        </svg>
+        <div class="form-card-header-text">
+          <h2>Official Grant Application Form</h2>
+          <p>FSG-2025-001 · GVN VERIFIED · ENCRYPTED</p>
+        </div>
       </div>
-      <div class="form-body">
 
+      <div class="form-body">
         <div class="notice-box">
           <strong>🔒 Secure & Encrypted Submission</strong>
-          Protected under the Privacy Act of 1974. 256-bit encryption. Zero fees at every stage — if anyone asks for payment, that is fraud.
+          Protected under the Privacy Act of 1974. 256-bit encryption. Zero fees at every stage.
         </div>
 
         <form id="grantForm" novalidate>
 
-          <!-- PERSONAL INFO -->
+          <!-- SECTION 1: PERSONAL -->
           <div class="form-section">
-            <div class="form-section-title">Personal Information</div>
+            <div class="form-section-title"><span class="section-num">1</span> Personal Information</div>
             <div class="form-row">
               <div class="form-group">
                 <label>First Name <span class="req">*</span></label>
-                <input type="text" id="firstName" placeholder="Enter first name" required>
+                <input type="text" id="firstName" placeholder="First name" required>
               </div>
               <div class="form-group">
                 <label>Last Name <span class="req">*</span></label>
-                <input type="text" id="lastName" placeholder="Enter last name" required>
+                <input type="text" id="lastName" placeholder="Last name" required>
               </div>
             </div>
             <div class="form-row">
@@ -248,28 +364,12 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
               <div class="form-group">
                 <label>State / Country <span class="req">*</span></label>
                 <select id="state" required>
-                  <option value="">— Select your location —</option>
+                  <option value="">— Select location —</option>
                   <optgroup label="United States">
-                    <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
-                    <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
-                    <option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option>
-                    <option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option>
-                    <option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option>
-                    <option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
-                    <option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option>
-                    <option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option>
-                    <option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
-                    <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option>
-                    <option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option>
-                    <option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option>
-                    <option>Wisconsin</option><option>Wyoming</option><option>Washington D.C.</option>
+                    <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option><option>Washington D.C.</option>
                   </optgroup>
                   <optgroup label="International">
-                    <option>United Kingdom</option>
-                    <option>Germany</option>
-                    <option>France</option>
-                    <option>Netherlands</option>
-                    <option>Other EU Country</option>
+                    <option>United Kingdom</option><option>Germany</option><option>France</option><option>Netherlands</option><option>Other EU Country</option>
                   </optgroup>
                 </select>
               </div>
@@ -278,52 +378,42 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
               <label>Full Residential Address <span class="req">*</span></label>
               <input type="text" id="address" placeholder="Street address, City, State, ZIP Code" required>
             </div>
-
-            <!-- DYNAMIC ID FIELD -->
             <div class="form-group">
-              <label id="idLabel">
-                National ID Number <span class="req">*</span>
-                <span class="id-country-badge" id="idBadge">Select country first</span>
+              <label id="idLabel">National ID Number <span class="req">*</span>
+                <span class="id-country-badge" id="idBadge">Select location first</span>
               </label>
-              <input type="text" id="nationalId" placeholder="Select your country/state above first" disabled>
-              <div class="field-hint" id="idHint">📍 Your ID format will appear after selecting your location above</div>
+              <input type="text" id="nationalId" placeholder="Select your state/country above first" disabled>
+              <div class="field-hint" id="idHint">Your ID format will appear after selecting your location</div>
             </div>
           </div>
 
-          <!-- ID PHOTO -->
+          <!-- SECTION 2: ID PHOTO -->
           <div class="form-section">
-            <div class="form-section-title">Government ID — Photo Verification</div>
-            <p style="font-size:13.5px;color:var(--gray);margin-bottom:16px;line-height:1.6">Upload a clear photo of your government-issued ID (passport, driver's license, or national ID card). You can take a live photo with your camera or upload from your gallery.</p>
-
+            <div class="form-section-title"><span class="section-num">2</span> Government ID — Photo Verification</div>
+            <p style="font-size:13.5px;color:var(--gray);margin-bottom:14px;line-height:1.6">Upload a clear photo of your government-issued ID. You can take a live photo or upload from your gallery.</p>
             <div class="photo-upload-area" id="photoArea">
               <div id="photoPlaceholder">
-                <div class="photo-icon">🪪</div>
-                <h4>Upload Your Government ID</h4>
-                <p>Take a photo with your camera or upload from your device.<br>Accepted: JPG, PNG, HEIC · Max size: 10MB</p>
+                <div style="font-size:32px;margin-bottom:10px">🪪</div>
+                <h4 style="font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px">Upload Government ID</h4>
+                <p style="font-size:13px;color:var(--gray)">Passport · Driver's License · National ID Card</p>
                 <div class="photo-btns">
-                  <button type="button" class="photo-btn camera" onclick="document.getElementById('cameraInput').click()">
-                    📷 Take Photo
-                  </button>
-                  <button type="button" class="photo-btn upload" onclick="document.getElementById('galleryInput').click()">
-                    🖼 Choose from Gallery
-                  </button>
+                  <button type="button" class="photo-btn camera" onclick="document.getElementById('cameraInput').click()">📷 Take Photo</button>
+                  <button type="button" class="photo-btn upload" onclick="document.getElementById('galleryInput').click()">🖼 Upload from Gallery</button>
                 </div>
               </div>
               <div class="photo-preview" id="photoPreview">
-                <img id="photoPreviewImg" src="" alt="ID Preview">
+                <img id="photoPreviewImg" src="" alt="ID">
                 <div class="photo-preview-badge">✓ ID Uploaded</div>
-                <span class="photo-remove" onclick="removePhoto()">✕ Remove and re-upload</span>
+                <span class="photo-remove" onclick="removePhoto()">✕ Remove & re-upload</span>
               </div>
             </div>
-
-            <!-- Hidden file inputs -->
             <input type="file" id="cameraInput" accept="image/*" capture="environment">
             <input type="file" id="galleryInput" accept="image/*">
           </div>
 
-          <!-- GRANT DETAILS -->
+          <!-- SECTION 3: GRANT DETAILS -->
           <div class="form-section">
-            <div class="form-section-title">Grant Details</div>
+            <div class="form-section-title"><span class="section-num">3</span> Grant Details</div>
             <div class="form-row">
               <div class="form-group">
                 <label>Applicant Type <span class="req">*</span></label>
@@ -355,14 +445,14 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
                 <label>Requested Amount <span class="req">*</span></label>
                 <div class="money-wrap">
                   <span class="money-prefix">$</span>
-                  <input type="text" id="amount" placeholder="0" inputmode="numeric" required autocomplete="off">
+                  <input type="text" id="amount" placeholder="0" inputmode="numeric" required>
                 </div>
-                <div class="field-hint" id="amountHint">Enter the amount you are requesting</div>
+                <div class="field-hint" id="amountHint">Enter amount in USD</div>
               </div>
               <div class="form-group">
                 <label>Annual Income Range <span class="req">*</span></label>
                 <select id="income" required>
-                  <option value="">— Select range —</option>
+                  <option value="">— Select —</option>
                   <option>Below $25,000</option>
                   <option>$25,000 – $50,000</option>
                   <option>$50,000 – $100,000</option>
@@ -372,39 +462,164 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
               </div>
             </div>
             <div class="form-group">
-              <label>Purpose of Grant — How will funds be used? <span class="req">*</span></label>
-              <textarea id="purpose" placeholder="Provide a clear and detailed description of how you intend to use the grant funds. Include your project goals, expected timeline, and measurable outcomes." required></textarea>
+              <label>Purpose — How will funds be used? <span class="req">*</span></label>
+              <textarea id="purpose" placeholder="Describe your project goals, timeline, and expected outcomes." required></textarea>
             </div>
           </div>
 
-          <!-- CERTIFICATION -->
+          <!-- SECTION 4: FINANCIAL PROFILE -->
           <div class="form-section">
-            <div class="form-section-title">Certification & Submission</div>
+            <div class="form-section-title"><span class="section-num">4</span> Financial Profile</div>
+            <div class="financial-notice">
+              <strong>📋 Why We Collect This Information</strong>
+              Federal grant eligibility is partly determined by financial need and credit standing. This information helps the review committee determine the appropriate award amount. All data is protected under the Privacy Act of 1974.
+            </div>
+
+            <!-- Credit Score Visual Selector -->
+            <div class="form-group">
+              <label>Credit Score Range <span class="req">*</span></label>
+              <div class="credit-score-visual">
+                <div class="credit-band poor" onclick="selectCredit(this,'300–579','Poor')">
+                  <div class="band-range">300–579</div>
+                  <div class="band-label">Poor</div>
+                </div>
+                <div class="credit-band fair" onclick="selectCredit(this,'580–669','Fair')">
+                  <div class="band-range">580–669</div>
+                  <div class="band-label">Fair</div>
+                </div>
+                <div class="credit-band good" onclick="selectCredit(this,'670–739','Good')">
+                  <div class="band-range">670–739</div>
+                  <div class="band-label">Good</div>
+                </div>
+                <div class="credit-band very-good" onclick="selectCredit(this,'740–799','Very Good')">
+                  <div class="band-range">740–799</div>
+                  <div class="band-label">Very Good</div>
+                </div>
+                <div class="credit-band exceptional" onclick="selectCredit(this,'800–850','Exceptional')">
+                  <div class="band-range">800–850</div>
+                  <div class="band-label">Exceptional</div>
+                </div>
+              </div>
+              <input type="hidden" id="creditScoreInput">
+              <div class="field-hint" id="creditHint">Select the range that matches your current credit score</div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Number of Active Credit Cards <span class="req">*</span></label>
+                <select id="numCreditCards" required>
+                  <option value="">— Select —</option>
+                  <option>0 — No credit cards</option>
+                  <option>1 credit card</option>
+                  <option>2 credit cards</option>
+                  <option>3 credit cards</option>
+                  <option>4 credit cards</option>
+                  <option>5 or more credit cards</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Total Credit Card Debt <span class="req">*</span></label>
+                <select id="creditCardDebt" required>
+                  <option value="">— Select range —</option>
+                  <option>$0 — No credit card debt</option>
+                  <option>$1 – $2,500</option>
+                  <option>$2,500 – $10,000</option>
+                  <option>$10,000 – $25,000</option>
+                  <option>$25,000 – $50,000</option>
+                  <option>Above $50,000</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Total Outstanding Loans / Debt <span class="req">*</span></label>
+                <select id="totalDebt" required>
+                  <option value="">— Select range —</option>
+                  <option>$0 — Debt free</option>
+                  <option>Below $10,000</option>
+                  <option>$10,000 – $50,000</option>
+                  <option>$50,000 – $100,000</option>
+                  <option>$100,000 – $250,000</option>
+                  <option>Above $250,000</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Monthly Debt Payments <span class="req">*</span></label>
+                <select id="monthlyDebt" required>
+                  <option value="">— Select range —</option>
+                  <option>$0</option>
+                  <option>$1 – $500</option>
+                  <option>$500 – $1,000</option>
+                  <option>$1,000 – $2,500</option>
+                  <option>$2,500 – $5,000</option>
+                  <option>Above $5,000</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Have you declared bankruptcy? <span class="req">*</span></label>
+                <select id="bankruptcy" required>
+                  <option value="">— Select —</option>
+                  <option>No — Never filed for bankruptcy</option>
+                  <option>Yes — Chapter 7 (discharged)</option>
+                  <option>Yes — Chapter 13 (repayment plan)</option>
+                  <option>Yes — More than 10 years ago</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Do you own or rent your home? <span class="req">*</span></label>
+                <select id="housingStatus" required>
+                  <option value="">— Select —</option>
+                  <option>Own — Mortgage paid off</option>
+                  <option>Own — Currently paying mortgage</option>
+                  <option>Rent</option>
+                  <option>Live with family / No rent</option>
+                  <option>Other housing arrangement</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Are you currently behind on any payments? <span class="req">*</span></label>
+              <select id="latePayments" required>
+                <option value="">— Select —</option>
+                <option>No — All payments current</option>
+                <option>Yes — 1–30 days behind</option>
+                <option>Yes — 31–60 days behind</option>
+                <option>Yes — 61–90 days behind</option>
+                <option>Yes — Over 90 days behind</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- SECTION 5: CERTIFICATION -->
+          <div class="form-section">
+            <div class="form-section-title"><span class="section-num">5</span> Certification & Submission</div>
             <label class="checkbox-group">
               <input type="checkbox" id="certify" required>
-              <p>I certify that all information provided is <strong>true, accurate, and complete</strong>. I understand that false information is a federal offense under <strong>18 U.S.C. § 1001</strong>.</p>
+              <p>I certify that all information provided is <strong>true, accurate, and complete</strong>. False information is a federal offense under <strong>18 U.S.C. § 1001</strong>.</p>
             </label>
             <label class="checkbox-group">
               <input type="checkbox" id="noFee">
-              <p>I confirm I have <strong>not been asked to pay any fee</strong>. If anyone requests payment related to this grant, I will report it as fraud immediately.</p>
+              <p>I confirm I have <strong>not been asked to pay any fee</strong>. If anyone requests payment related to this grant, I will report it as fraud.</p>
             </label>
           </div>
 
           <button type="submit" class="submit-btn" id="submitBtn">
-            <span>📋</span>
-            <span id="btnText">Submit Application</span>
+            <span>📋</span><span id="btnText">Submit Official Application</span>
           </button>
           <div class="error-box" id="errorBox"></div>
           <div class="form-disclaimer">
-            This application is completely free. No payment will ever be requested at any stage.<br>
-            Program Ref: FSG-2025-001 · GVN · Federal Support Grant
+            This application is completely free at every stage · Program Ref: FSG-2025-001 · GVN · Federal Support Grant
           </div>
         </form>
       </div>
     </div>
   </div>
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="side-card">
       <div class="side-card-header blue">Who May Apply</div>
@@ -414,8 +629,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
           <li>Small businesses with valid EIN</li>
           <li>Nonprofits with 501(c)(3) status</li>
           <li>State & local government entities</li>
-          <li>Tribal governments & organizations</li>
-          <li>UK, Germany & participating EU residents</li>
+          <li>UK, Germany & EU residents</li>
         </ul>
       </div>
     </div>
@@ -424,11 +638,10 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
       <div class="side-card-body">
         <ul class="side-list">
           <li>Government-issued photo ID</li>
-          <li>Social Security Number (SSN) — USA</li>
+          <li>SSN (USA) or national ID</li>
           <li>EIN for business applicants</li>
           <li>Proof of address</li>
           <li>Last 2 years of tax returns</li>
-          <li>Project description / business plan</li>
         </ul>
       </div>
     </div>
@@ -440,17 +653,16 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
           <li>We never call you unexpectedly</li>
           <li>We never ask for gift cards</li>
           <li>We never use WhatsApp or Facebook</li>
-          <li>We never ask for your bank password</li>
         </ul>
       </div>
     </div>
     <div class="side-card">
-      <div class="side-card-header blue">Need Help?</div>
+      <div class="side-card-header blue">Contact</div>
       <div class="side-card-body">
         <div class="contact-item"><strong>Email</strong>support@federalsupportgrant.gov</div>
-        <div class="contact-item"><strong>Helpline (USA)</strong>1-800-FSG-GRANT</div>
-        <div class="contact-item"><strong>Hours</strong>Mon–Fri, 8:00 AM – 6:00 PM EST</div>
-        <div class="contact-item"><strong>Review Period</strong>30–45 business days</div>
+        <div class="contact-item"><strong>Helpline</strong>1-800-FSG-GRANT</div>
+        <div class="contact-item"><strong>Hours</strong>Mon–Fri, 8AM–6PM EST</div>
+        <div class="contact-item"><strong>Review</strong>30–45 business days</div>
       </div>
     </div>
   </aside>
@@ -458,7 +670,7 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <p>© 2025 Federal Support Grant · Government Grant Network (GVN) · Program Ref: FSG-2025-001</p>
+    <p>© 2025 Federal Support Grant · Government Grant Network (GVN) · FSG-2025-001</p>
     <div class="footer-links">
       <a href="../index.html">Home</a>
       <a href="../index.html#scam-section">Scam Alert</a>
@@ -474,157 +686,55 @@ const db = createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN4anRhbXBka29sbGFzcGxtendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3NjEwNDcsImV4cCI6MjA5NTMzNzA0N30.a56AwkIj0PvSXuPn1teDAjgDLp-Oi-ghieqVXVOibQQ'
 )
 
-// ── 1. COUNTRY-AWARE ID FIELD ──────────────────────────
-const US_STATES = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut',
-  'Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky',
-  'Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri',
-  'Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York',
-  'North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island',
-  'South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington',
-  'West Virginia','Wisconsin','Wyoming','Washington D.C.']
-
-const ID_CONFIGS = {
-  USA: {
-    label: 'Social Security Number (SSN)',
-    placeholder: 'XXX-XX-XXXX',
-    hint: '🇺🇸 Format: XXX-XX-XXXX · 9 digits total',
-    badge: '🇺🇸 USA · SSN',
-    badgeClass: '',
-    maxlength: 11,
-    format: (v) => {
-      let d = v.replace(/\D/g,'').slice(0,9)
-      if(d.length>5) return d.slice(0,3)+'-'+d.slice(3,5)+'-'+d.slice(5)
-      if(d.length>3) return d.slice(0,3)+'-'+d.slice(3)
-      return d
-    },
-    validate: (v) => /^\d{3}-\d{2}-\d{4}$/.test(v),
-    validMsg: '✓ Valid SSN format',
-    invalidMsg: '✗ Must be XXX-XX-XXXX (9 digits)'
-  },
-  UK: {
-    label: 'National Insurance Number (NI)',
-    placeholder: 'AB 12 34 56 C',
-    hint: '🇬🇧 Format: AB 123456 C · 2 letters + 6 digits + 1 letter',
-    badge: '🇬🇧 UK · NI Number',
-    badgeClass: 'uk',
-    maxlength: 13,
-    format: (v) => {
-      let c = v.replace(/\s/g,'').toUpperCase().slice(0,9)
-      if(c.length>6) return c.slice(0,2)+' '+c.slice(2,4)+' '+c.slice(4,6)+' '+c.slice(6,8)+' '+c.slice(8)
-      if(c.length>4) return c.slice(0,2)+' '+c.slice(2,4)+' '+c.slice(4)
-      if(c.length>2) return c.slice(0,2)+' '+c.slice(2)
-      return c
-    },
-    validate: (v) => /^[A-Z]{2}\s?\d{2}\s?\d{2}\s?\d{2}\s?[A-Z]$/i.test(v.replace(/\s/g,'')+v.slice(-1)),
-    validMsg: '✓ Valid NI Number format',
-    invalidMsg: '✗ Must be AB 12 34 56 C format'
-  },
-  DE: {
-    label: 'Tax Identification Number (Steuer-ID)',
-    placeholder: '12345678901',
-    hint: '🇩🇪 Format: 11-digit Steueridentifikationsnummer',
-    badge: '🇩🇪 Germany · Steuer-ID',
-    badgeClass: 'de',
-    maxlength: 11,
-    format: (v) => v.replace(/\D/g,'').slice(0,11),
-    validate: (v) => /^\d{11}$/.test(v.replace(/\s/g,'')),
-    validMsg: '✓ Valid Steuer-ID format',
-    invalidMsg: '✗ Must be exactly 11 digits'
-  },
-  EU: {
-    label: 'National ID / Tax Number',
-    placeholder: 'Enter your national ID or tax number',
-    hint: '🇪🇺 Enter your government-issued national ID or tax identification number',
-    badge: '🇪🇺 EU · National ID',
-    badgeClass: 'eu',
-    maxlength: 20,
-    format: (v) => v,
-    validate: (v) => v.trim().length >= 6,
-    validMsg: '✓ ID number entered',
-    invalidMsg: '✗ Please enter your national ID number (min 6 characters)'
-  }
+// ── CREDIT SCORE SELECTOR ──
+function selectCredit(el, range, label) {
+  document.querySelectorAll('.credit-band').forEach(b => b.classList.remove('selected'))
+  el.classList.add('selected')
+  document.getElementById('creditScoreInput').value = range + ' (' + label + ')'
+  document.getElementById('creditHint').textContent = '✓ Selected: ' + range + ' — ' + label
+  document.getElementById('creditHint').className = 'field-hint valid'
 }
 
+// ── COUNTRY ID ──
+const US_STATES = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming','Washington D.C.']
+const ID_CONFIGS = {
+  USA:{label:'Social Security Number (SSN)',placeholder:'XXX-XX-XXXX',hint:'🇺🇸 Format: XXX-XX-XXXX · 9 digits',badge:'🇺🇸 SSN',badgeClass:'',maxlength:11,format:(v)=>{let d=v.replace(/\D/g,'').slice(0,9);if(d.length>5)return d.slice(0,3)+'-'+d.slice(3,5)+'-'+d.slice(5);if(d.length>3)return d.slice(0,3)+'-'+d.slice(3);return d},validate:(v)=>/^\d{3}-\d{2}-\d{4}$/.test(v),validMsg:'✓ Valid SSN',invalidMsg:'✗ Must be XXX-XX-XXXX'},
+  UK:{label:'National Insurance Number',placeholder:'AB 12 34 56 C',hint:'🇬🇧 Format: AB 12 34 56 C',badge:'🇬🇧 NI Number',badgeClass:'uk',maxlength:13,format:(v)=>{let c=v.replace(/\s/g,'').toUpperCase().slice(0,9);if(c.length>6)return c.slice(0,2)+' '+c.slice(2,4)+' '+c.slice(4,6)+' '+c.slice(6,8)+' '+c.slice(8);if(c.length>4)return c.slice(0,2)+' '+c.slice(2,4)+' '+c.slice(4);if(c.length>2)return c.slice(0,2)+' '+c.slice(2);return c},validate:(v)=>/^[A-Z]{2}\d{6}[A-Z]$/i.test(v.replace(/\s/g,'')),validMsg:'✓ Valid NI Number',invalidMsg:'✗ Format: AB 123456 C'},
+  DE:{label:'Steueridentifikationsnummer (Tax ID)',placeholder:'12345678901',hint:'🇩🇪 11-digit German Tax ID',badge:'🇩🇪 Steuer-ID',badgeClass:'de',maxlength:11,format:(v)=>v.replace(/\D/g,'').slice(0,11),validate:(v)=>/^\d{11}$/.test(v),validMsg:'✓ Valid Steuer-ID',invalidMsg:'✗ Must be 11 digits'},
+  EU:{label:'National ID / Tax Number',placeholder:'Enter national ID or tax number',hint:'🇪🇺 Enter your government-issued ID number',badge:'🇪🇺 National ID',badgeClass:'eu',maxlength:20,format:(v)=>v,validate:(v)=>v.trim().length>=6,validMsg:'✓ ID entered',invalidMsg:'✗ Minimum 6 characters'}
+}
 let currentIdConfig = null
-
-function getIdConfig(location) {
-  if (!location) return null
-  if (US_STATES.includes(location)) return ID_CONFIGS.USA
-  if (location === 'United Kingdom') return ID_CONFIGS.UK
-  if (location === 'Germany') return ID_CONFIGS.DE
-  if (['France','Netherlands','Other EU Country'].includes(location)) return ID_CONFIGS.EU
+function getIdConfig(loc) {
+  if(US_STATES.includes(loc)) return ID_CONFIGS.USA
+  if(loc==='United Kingdom') return ID_CONFIGS.UK
+  if(loc==='Germany') return ID_CONFIGS.DE
+  if(['France','Netherlands','Other EU Country'].includes(loc)) return ID_CONFIGS.EU
   return null
 }
-
 document.getElementById('state').addEventListener('change', function() {
   const config = getIdConfig(this.value)
-  const idInput = document.getElementById('nationalId')
-  const idLabel = document.getElementById('idLabel')
-  const idBadge = document.getElementById('idBadge')
-  const idHint  = document.getElementById('idHint')
-
-  if (!config) {
-    idInput.disabled = true
-    idInput.placeholder = 'Select your country/state above first'
-    idBadge.textContent = 'Select country first'
-    idBadge.className = 'id-country-badge'
-    idHint.textContent = '📍 Your ID format will appear after selecting your location'
-    idHint.className = 'field-hint'
-    currentIdConfig = null
-    return
-  }
-
-  currentIdConfig = config
-  idInput.disabled = false
-  idInput.placeholder = config.placeholder
-  idInput.maxLength = config.maxlength
-  idInput.value = ''
-  idBadge.textContent = config.badge
-  idBadge.className = 'id-country-badge ' + config.badgeClass
-  idHint.textContent = config.hint
-  idHint.className = 'field-hint'
-
-  // Update label (keep the required star)
-  document.querySelector('#idLabel').childNodes[0].textContent = config.label + ' '
-})
-
-document.getElementById('nationalId').addEventListener('input', function() {
-  if (!currentIdConfig) return
-  const formatted = currentIdConfig.format(this.value)
-  const cursor = this.selectionStart
-  this.value = formatted
-  // Try to restore cursor position
-  try { this.setSelectionRange(cursor, cursor) } catch(e){}
-
-  const isValid = currentIdConfig.validate(formatted)
+  const el = document.getElementById('nationalId')
+  const badge = document.getElementById('idBadge')
   const hint = document.getElementById('idHint')
-
-  if (formatted.length === 0) {
-    this.className = ''
-    hint.textContent = currentIdConfig.hint
-    hint.className = 'field-hint'
-  } else if (isValid) {
-    this.classList.remove('invalid')
-    this.classList.add('valid')
-    hint.textContent = currentIdConfig.validMsg
-    hint.className = 'field-hint valid'
-  } else {
-    this.classList.remove('valid')
-    this.classList.add('invalid')
-    hint.textContent = currentIdConfig.invalidMsg
-    hint.className = 'field-hint invalid'
-  }
+  if(!config){el.disabled=true;el.placeholder='Select location first';badge.textContent='Select location first';badge.className='id-country-badge';currentIdConfig=null;return}
+  currentIdConfig=config;el.disabled=false;el.placeholder=config.placeholder;el.maxLength=config.maxlength;el.value='';badge.textContent=config.badge;badge.className='id-country-badge '+config.badgeClass;hint.textContent=config.hint;hint.className='field-hint'
+  document.querySelector('#idLabel').childNodes[0].textContent=config.label+' '
+})
+document.getElementById('nationalId').addEventListener('input', function() {
+  if(!currentIdConfig) return
+  const fmt = currentIdConfig.format(this.value)
+  this.value = fmt
+  const hint = document.getElementById('idHint')
+  if(!fmt){this.className='';hint.textContent=currentIdConfig.hint;hint.className='field-hint';return}
+  if(currentIdConfig.validate(fmt)){this.classList.remove('invalid');this.classList.add('valid');hint.textContent=currentIdConfig.validMsg;hint.className='field-hint valid'}
+  else{this.classList.remove('valid');this.classList.add('invalid');hint.textContent=currentIdConfig.invalidMsg;hint.className='field-hint invalid'}
 })
 
-// ── 2. PHOTO CAPTURE ──────────────────────────────────
+// ── PHOTO ──
 let photoBase64 = null
-
 function handlePhotoFile(file) {
-  if (!file) return
-  if (file.size > 10 * 1024 * 1024) {
-    alert('Photo is too large. Please use an image under 10MB.')
-    return
-  }
+  if(!file) return
+  if(file.size > 10*1024*1024){alert('Photo too large. Max 10MB.');return}
   const reader = new FileReader()
   reader.onload = (e) => {
     photoBase64 = e.target.result
@@ -635,153 +745,94 @@ function handlePhotoFile(file) {
   }
   reader.readAsDataURL(file)
 }
+document.getElementById('cameraInput').addEventListener('change', function(){handlePhotoFile(this.files[0])})
+document.getElementById('galleryInput').addEventListener('change', function(){handlePhotoFile(this.files[0])})
+function removePhoto(){photoBase64=null;document.getElementById('photoPreviewImg').src='';document.getElementById('photoPlaceholder').style.display='block';document.getElementById('photoPreview').style.display='none';document.getElementById('photoArea').classList.remove('has-photo');document.getElementById('cameraInput').value='';document.getElementById('galleryInput').value=''}
 
-document.getElementById('cameraInput').addEventListener('change', function() {
-  handlePhotoFile(this.files[0])
-})
-document.getElementById('galleryInput').addEventListener('change', function() {
-  handlePhotoFile(this.files[0])
-})
-
-function removePhoto() {
-  photoBase64 = null
-  document.getElementById('photoPreviewImg').src = ''
-  document.getElementById('photoPlaceholder').style.display = 'block'
-  document.getElementById('photoPreview').style.display = 'none'
-  document.getElementById('photoArea').classList.remove('has-photo')
-  document.getElementById('cameraInput').value = ''
-  document.getElementById('galleryInput').value = ''
-}
-
-// ── 3. MONEY INPUT FORMATTING ─────────────────────────
+// ── MONEY FORMAT ──
+const MAX_GRANT={'Small Business Development':250000,'Education & Training':75000,'Housing Assistance':50000,'Environmental & Agriculture':500000,'Healthcare & Community':300000,'Technology & Innovation':1000000}
 const amountInput = document.getElementById('amount')
-const amountHint  = document.getElementById('amountHint')
-
-const MAX_GRANT = { 
-  'Small Business Development': 250000,
-  'Education & Training': 75000,
-  'Housing Assistance': 50000,
-  'Environmental & Agriculture': 500000,
-  'Healthcare & Community': 300000,
-  'Technology & Innovation': 1000000
-}
-
-function formatMoney(val) {
-  const digits = val.replace(/[^0-9]/g, '')
-  if (!digits) return ''
-  return parseInt(digits, 10).toLocaleString('en-US')
-}
-
-function getRawAmount() {
-  return parseInt(amountInput.value.replace(/[^0-9]/g, '') || '0', 10)
-}
-
-amountInput.addEventListener('input', function() {
-  const pos = this.selectionStart
-  const before = this.value.length
-  this.value = formatMoney(this.value)
-  const after = this.value.length
-  try { this.setSelectionRange(pos + (after - before), pos + (after - before)) } catch(e){}
-
-  const raw = getRawAmount()
-  const cat = document.getElementById('category').value
-  const max = MAX_GRANT[cat]
-
-  if (!raw) {
-    amountHint.textContent = 'Enter the amount you are requesting'
-    amountHint.className = 'field-hint'
-  } else if (max && raw > max) {
-    amountHint.textContent = `✗ Maximum for ${cat} is $${max.toLocaleString('en-US')}`
-    amountHint.className = 'field-hint invalid'
-    this.classList.add('invalid')
-    this.classList.remove('valid')
-  } else {
-    amountHint.textContent = `✓ $${raw.toLocaleString('en-US')} USD requested`
-    amountHint.className = 'field-hint valid'
-    this.classList.remove('invalid')
-    this.classList.add('valid')
-  }
+function formatMoney(v){const d=v.replace(/[^0-9]/g,'');if(!d)return '';return parseInt(d,10).toLocaleString('en-US')}
+function getRawAmount(){return parseInt(amountInput.value.replace(/[^0-9]/g,'')||'0',10)}
+amountInput.addEventListener('input', function(){
+  const pos=this.selectionStart,before=this.value.length
+  this.value=formatMoney(this.value)
+  const after=this.value.length
+  try{this.setSelectionRange(pos+(after-before),pos+(after-before))}catch(e){}
+  const raw=getRawAmount(),cat=document.getElementById('category').value,max=MAX_GRANT[cat],hint=document.getElementById('amountHint')
+  if(!raw){hint.textContent='Enter the amount in USD';hint.className='field-hint';return}
+  if(max&&raw>max){hint.textContent='✗ Max for '+cat+' is $'+max.toLocaleString('en-US');hint.className='field-hint invalid';this.classList.add('invalid');this.classList.remove('valid')}
+  else{hint.textContent='✓ $'+raw.toLocaleString('en-US')+' USD requested';hint.className='field-hint valid';this.classList.remove('invalid');this.classList.add('valid')}
 })
+document.getElementById('category').addEventListener('change',function(){if(getRawAmount()>0)amountInput.dispatchEvent(new Event('input'))})
 
-// Update hint when category changes
-document.getElementById('category').addEventListener('change', function() {
-  const raw = getRawAmount()
-  if (raw > 0) amountInput.dispatchEvent(new Event('input'))
-})
-
-// ── 4. FORM SUBMISSION ────────────────────────────────
-function generateRef() {
-  return 'FSG-' + Date.now().toString().slice(-8)
-}
-
+// ── SUBMIT ──
+function generateRef(){return 'FSG-'+Date.now().toString().slice(-8)}
 document.getElementById('grantForm').addEventListener('submit', async (e) => {
   e.preventDefault()
   const errorBox = document.getElementById('errorBox')
   errorBox.style.display = 'none'
-
-  const required = ['firstName','lastName','dob','email','phone','address','state','applicantType','category','amount','income','purpose']
+  const required = ['firstName','lastName','dob','email','phone','address','state','applicantType','category','amount','income','purpose','numCreditCards','creditCardDebt','totalDebt','monthlyDebt','bankruptcy','housingStatus','latePayments']
   let valid = true
   required.forEach(id => {
     const el = document.getElementById(id)
-    if (!el.value.trim()) { el.style.borderColor='#ef4444'; valid=false }
+    if(!el.value.trim()){el.style.borderColor='#ef4444';valid=false}
     else el.style.borderColor=''
   })
-
-  if (!document.getElementById('certify').checked) {
-    alert('Please read and check the certification before submitting.')
-    return
+  if(!document.getElementById('creditScoreInput').value){
+    document.getElementById('creditHint').textContent='✗ Please select your credit score range'
+    document.getElementById('creditHint').className='field-hint invalid'
+    valid=false
   }
-  if (!valid) {
-    errorBox.style.display = 'block'
-    errorBox.textContent = '⚠ Please fill in all required fields marked with *'
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    return
-  }
+  if(!document.getElementById('certify').checked){alert('Please check the certification before submitting.');return}
+  if(!valid){errorBox.style.display='block';errorBox.textContent='⚠ Please fill in all required fields.';window.scrollTo({top:0,behavior:'smooth'});return}
 
-  const submitBtn = document.getElementById('submitBtn')
-  submitBtn.disabled = true
-  submitBtn.innerHTML = '<div class="spinner"></div><span>Submitting your application...</span>'
+  const btn = document.getElementById('submitBtn')
+  btn.disabled=true
+  btn.innerHTML='<div class="spinner"></div><span>Submitting...</span>'
 
   const ref = generateRef()
-  const raw = getRawAmount()
-
   const payload = {
-    reference_number : ref,
-    first_name       : document.getElementById('firstName').value.trim(),
-    last_name        : document.getElementById('lastName').value.trim(),
-    email            : document.getElementById('email').value.trim(),
-    phone            : document.getElementById('phone').value.trim(),
-    date_of_birth    : document.getElementById('dob').value,
-    state            : document.getElementById('state').value,
-    address          : document.getElementById('address').value.trim(),
-    applicant_type   : document.getElementById('applicantType').value,
-    grant_category   : document.getElementById('category').value,
-    amount_requested : raw,
-    purpose          : document.getElementById('purpose').value.trim(),
-    income_range     : document.getElementById('income').value,
-    status           : 'pending',
-    submitted_at     : new Date().toISOString()
+    reference_number:ref,
+    first_name:document.getElementById('firstName').value.trim(),
+    last_name:document.getElementById('lastName').value.trim(),
+    email:document.getElementById('email').value.trim(),
+    phone:document.getElementById('phone').value.trim(),
+    date_of_birth:document.getElementById('dob').value,
+    state:document.getElementById('state').value,
+    address:document.getElementById('address').value.trim(),
+    applicant_type:document.getElementById('applicantType').value,
+    grant_category:document.getElementById('category').value,
+    amount_requested:getRawAmount(),
+    purpose:document.getElementById('purpose').value.trim(),
+    income_range:document.getElementById('income').value,
+    credit_score_range:document.getElementById('creditScoreInput').value,
+    num_credit_cards:document.getElementById('numCreditCards').value,
+    credit_card_debt:document.getElementById('creditCardDebt').value,
+    total_debt:document.getElementById('totalDebt').value,
+    monthly_debt_payments:document.getElementById('monthlyDebt').value,
+    bankruptcy_history:document.getElementById('bankruptcy').value,
+    housing_status:document.getElementById('housingStatus').value,
+    late_payments:document.getElementById('latePayments').value,
+    status:'pending',
+    submitted_at:new Date().toISOString()
   }
-
   try {
-    const { error } = await db.from('applications').insert([payload])
-    if (error) throw new Error(error.message)
+    const {error} = await db.from('applications').insert([payload])
+    if(error) throw new Error(error.message)
     document.getElementById('successRef').textContent = ref
     document.getElementById('formCard').style.display = 'none'
     document.getElementById('successCard').style.display = 'block'
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  } catch (err) {
-    console.error(err)
-    submitBtn.disabled = false
-    submitBtn.innerHTML = '<span>📋</span><span>Submit Application</span>'
-    errorBox.style.display = 'block'
-    errorBox.textContent = '⚠ Submission failed: ' + (err.message || 'Please check your connection and try again.')
+    window.scrollTo({top:0,behavior:'smooth'})
+  } catch(err) {
+    btn.disabled=false
+    btn.innerHTML='<span>📋</span><span>Submit Official Application</span>'
+    errorBox.style.display='block'
+    errorBox.textContent='⚠ Submission error: '+err.message
   }
 })
-
-// Clear red borders on input
-document.querySelectorAll('input,select,textarea').forEach(el => {
-  el.addEventListener('input', () => { if(el.id !== 'nationalId' && el.id !== 'amount') el.style.borderColor='' })
+document.querySelectorAll('input,select,textarea').forEach(el=>{
+  el.addEventListener('input',()=>{if(el.id!=='nationalId'&&el.id!=='amount')el.style.borderColor=''})
 })
 </script>
 </body>
