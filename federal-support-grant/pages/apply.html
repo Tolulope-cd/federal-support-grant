@@ -336,10 +336,14 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
           <!-- SECTION 1: PERSONAL -->
           <div class="form-section">
             <div class="form-section-title"><span class="section-num">1</span> Personal Information</div>
-            <div class="form-row">
+            <div class="form-row-3">
               <div class="form-group">
                 <label>First Name <span class="req">*</span></label>
                 <input type="text" id="firstName" placeholder="First name" required>
+              </div>
+              <div class="form-group">
+                <label>Middle Name <span style="font-size:11px;color:var(--gray);font-weight:400">(Optional)</span></label>
+                <input type="text" id="middleName" placeholder="Middle name">
               </div>
               <div class="form-group">
                 <label>Last Name <span class="req">*</span></label>
@@ -795,6 +799,7 @@ document.getElementById('grantForm').addEventListener('submit', async (e) => {
   const payload = {
     reference_number:ref,
     first_name:document.getElementById('firstName').value.trim(),
+    middle_name:document.getElementById('middleName').value.trim(),
     last_name:document.getElementById('lastName').value.trim(),
     email:document.getElementById('email').value.trim(),
     phone:document.getElementById('phone').value.trim(),
