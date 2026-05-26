@@ -1,1 +1,573 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | Federal Support Grant — GVN</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0b1f3a;--blue:#1a3a6b;--gold:#c9a84c;
+  --white:#fff;--off:#f7f6f3;--gray:#6b7280;--dark:#0f172a;
+  --red:#b91c1c;--green:#15803d;--border:#e2e8f0;
+  --pending:#ca8a04;--approved:#15803d;--rejected:#b91c1c;--review:#1d4ed8;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:var(--dark);background:#f1f5f9;overflow-x:hidden}
+
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);padding:24px}
+.login-card{background:var(--white);border-radius:12px;padding:40px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.login-seal{width:64px;height:64px;margin:0 auto 20px;display:block}
+.login-card h1{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);text-align:center;margin-bottom:6px}
+.login-card p{font-size:13px;color:var(--gray);text-align:center;margin-bottom:28px}
+.login-group{margin-bottom:16px}
+.login-group label{font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:6px}
+.login-group input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:5px;font-size:15px;font-family:inherit;transition:all .2s}
+.login-group input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,58,107,0.1)}
+.login-btn{width:100%;background:var(--navy);color:var(--white);font-size:15px;font-weight:700;padding:14px;border:none;border-radius:5px;cursor:pointer;font-family:inherit;margin-top:8px;transition:all .2s}
+.login-btn:hover{background:var(--blue)}
+.login-error{background:#fef2f2;border:1px solid #fca5a5;border-radius:4px;padding:10px 14px;font-size:13px;color:var(--red);margin-top:12px;display:none;text-align:center}
+.login-badge{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:var(--gray);margin-top:20px}
+.login-dot{width:6px;height:6px;background:#22c55e;border-radius:50%}
+
+/* DASHBOARD */
+.dashboard{display:none}
+.topbar{background:var(--navy);border-bottom:3px solid var(--gold);padding:0}
+.topbar-inner{max-width:1400px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.topbar-logo{display:flex;align-items:center;gap:12px}
+.topbar-logo strong{font-family:'Playfair Display',serif;font-size:17px;color:var(--white)}
+.topbar-logo span{font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase}
+.topbar-right{display:flex;align-items:center;gap:16px}
+.admin-badge{background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:var(--gold);font-size:11px;font-weight:700;padding:4px 12px;border-radius:3px;letter-spacing:.8px;text-transform:uppercase}
+.logout-btn{background:transparent;color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.15);font-size:12px;padding:6px 14px;border-radius:4px;cursor:pointer;font-family:inherit;transition:all .2s}
+.logout-btn:hover{color:var(--white);border-color:rgba(255,255,255,0.4)}
+
+/* STATS */
+.stats-wrap{max-width:1400px;margin:0 auto;padding:28px 28px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.stat-card{background:var(--white);border-radius:8px;border:1px solid var(--border);padding:20px;display:flex;align-items:center;gap:14px}
+.stat-icon{width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.stat-icon.total{background:#eff6ff}
+.stat-icon.pending{background:#fefce8}
+.stat-icon.approved{background:#f0fdf4}
+.stat-icon.rejected{background:#fef2f2}
+.stat-icon.amount{background:#faf5ff}
+.stat-num{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy);line-height:1}
+.stat-label{font-size:12px;color:var(--gray);margin-top:3px;font-weight:500}
+
+/* MAIN */
+.main-area{max-width:1400px;margin:0 auto;padding:24px 28px}
+
+/* TOOLBAR */
+.toolbar{background:var(--white);border-radius:8px;border:1px solid var(--border);padding:16px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.search-wrap{position:relative;flex:1;min-width:220px}
+.search-wrap input{width:100%;padding:9px 14px 9px 36px;border:1.5px solid var(--border);border-radius:5px;font-size:14px;font-family:inherit;transition:all .2s}
+.search-wrap input:focus{outline:none;border-color:var(--blue)}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--gray);font-size:14px}
+.toolbar select{padding:9px 32px 9px 12px;border:1.5px solid var(--border);border-radius:5px;font-size:13px;font-family:inherit;color:var(--dark);background:var(--white);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;cursor:pointer;transition:border .2s}
+.toolbar select:focus{outline:none;border-color:var(--blue)}
+.refresh-btn{background:var(--navy);color:var(--white);border:none;padding:9px 18px;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;transition:background .2s}
+.refresh-btn:hover{background:var(--blue)}
+.export-btn{background:var(--white);color:var(--green);border:1.5px solid var(--green);padding:9px 18px;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;transition:all .2s}
+.export-btn:hover{background:#f0fdf4}
+.record-count{font-size:12px;color:var(--gray);margin-left:auto;white-space:nowrap}
+
+/* TABLE */
+.table-card{background:var(--white);border-radius:8px;border:1px solid var(--border);overflow:hidden}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:900px}
+thead{background:var(--navy)}
+thead th{padding:13px 16px;text-align:left;font-size:11px;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:.8px;text-transform:uppercase;white-space:nowrap}
+thead th:first-child{padding-left:20px}
+tbody tr{border-bottom:1px solid var(--border);transition:background .15s;cursor:pointer}
+tbody tr:hover{background:#f8faff}
+tbody tr:last-child{border-bottom:none}
+tbody td{padding:13px 16px;font-size:13.5px;color:var(--dark);vertical-align:middle}
+tbody td:first-child{padding-left:20px}
+.td-ref{font-family:monospace;font-size:12px;color:var(--blue);font-weight:600}
+.td-name{font-weight:600;color:var(--navy)}
+.td-amount{font-weight:700;color:var(--green)}
+.td-date{font-size:12px;color:var(--gray)}
+.status-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.status-pill.pending{background:#fef9c3;color:var(--pending)}
+.status-pill.approved{background:#dcfce7;color:var(--approved)}
+.status-pill.rejected{background:#fee2e2;color:var(--rejected)}
+.status-pill.review{background:#dbeafe;color:var(--review)}
+.status-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+.no-data{text-align:center;padding:60px 20px;color:var(--gray)}
+.no-data-icon{font-size:48px;margin-bottom:12px}
+.loading-row td{text-align:center;padding:40px;color:var(--gray)}
+.spinner-sm{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);border-radius:12px;width:100%;max-width:780px;margin:auto;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.3)}
+.modal-header{background:var(--navy);padding:20px 28px;display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{font-family:'Playfair Display',serif;font-size:18px;color:var(--white)}
+.modal-header-ref{font-size:11px;color:var(--gold);letter-spacing:.8px;margin-top:3px}
+.modal-close{background:rgba(255,255,255,0.1);border:none;color:var(--white);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .2s;flex-shrink:0}
+.modal-close:hover{background:rgba(255,255,255,0.2)}
+.modal-body{padding:28px;max-height:80vh;overflow-y:auto}
+.modal-section{margin-bottom:24px}
+.modal-section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px}
+.modal-section-title::before{content:'';display:block;width:3px;height:13px;background:var(--gold);border-radius:2px}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.detail-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.detail-item{background:var(--off);border-radius:6px;padding:12px 14px}
+.detail-item label{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--gray);display:block;margin-bottom:4px}
+.detail-item p{font-size:14px;color:var(--dark);font-weight:500;line-height:1.4}
+.detail-item.full{grid-column:1/-1}
+.detail-item p.amount{font-size:20px;font-weight:700;color:var(--green)}
+.credit-display{display:flex;align-items:center;gap:8px}
+.credit-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.credit-fill{height:100%;border-radius:4px;transition:width .6s}
+.credit-fill.poor{background:#dc2626;width:20%}
+.credit-fill.fair{background:#ea580c;width:40%}
+.credit-fill.good{background:#ca8a04;width:60%}
+.credit-fill.very-good{background:#16a34a;width:80%}
+.credit-fill.exceptional{background:#0369a1;width:100%}
+
+/* STATUS UPDATE */
+.status-update{background:var(--off);border:1px solid var(--border);border-radius:8px;padding:20px;margin-top:4px}
+.status-update h4{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px}
+.status-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.status-btn{padding:8px 16px;border-radius:5px;font-size:12px;font-weight:700;border:2px solid;cursor:pointer;font-family:inherit;transition:all .2s;text-transform:uppercase;letter-spacing:.5px}
+.status-btn.pending{border-color:var(--pending);color:var(--pending);background:transparent}
+.status-btn.pending:hover,.status-btn.pending.active{background:var(--pending);color:var(--white)}
+.status-btn.approved{border-color:var(--approved);color:var(--approved);background:transparent}
+.status-btn.approved:hover,.status-btn.approved.active{background:var(--approved);color:var(--white)}
+.status-btn.rejected{border-color:var(--rejected);color:var(--rejected);background:transparent}
+.status-btn.rejected:hover,.status-btn.rejected.active{background:var(--rejected);color:var(--white)}
+.status-btn.review{border-color:var(--review);color:var(--review);background:transparent}
+.status-btn.review:hover,.status-btn.review.active{background:var(--review);color:var(--white)}
+.notes-area{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:5px;font-size:13px;font-family:inherit;resize:vertical;min-height:70px;margin-bottom:10px;transition:border .2s}
+.notes-area:focus{outline:none;border-color:var(--blue)}
+.save-btn{background:var(--navy);color:var(--white);border:none;padding:10px 24px;border-radius:5px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s}
+.save-btn:hover{background:var(--blue)}
+.save-success{font-size:12px;color:var(--green);margin-left:10px;display:none}
+
+@media(max-width:768px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .detail-grid,.detail-grid-3{grid-template-columns:1fr}
+  .stat-card{padding:16px}
+  .modal-body{padding:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-card">
+    <svg class="login-seal" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="49" fill="#0b1f3a" stroke="#c9a84c" stroke-width="2"/>
+      <circle cx="50" cy="50" r="44" fill="none" stroke="#c9a84c" stroke-width="0.5" stroke-dasharray="3,2"/>
+      <ellipse cx="50" cy="55" rx="18" ry="14" fill="#c9a84c"/>
+      <path d="M32 50 Q20 38 15 45 Q22 55 32 58Z" fill="#c9a84c"/>
+      <path d="M68 50 Q80 38 85 45 Q78 55 68 58Z" fill="#c9a84c"/>
+      <circle cx="50" cy="40" r="9" fill="#c9a84c"/>
+      <path d="M50 43 L54 46 L50 47Z" fill="#0b1f3a"/>
+      <circle cx="53" cy="39" r="1.5" fill="#0b1f3a"/>
+      <rect x="44" y="53" width="12" height="10" rx="2" fill="#0b1f3a" stroke="#c9a84c" stroke-width="0.5"/>
+      <text x="50" y="28" text-anchor="middle" fill="#c9a84c" font-size="8" letter-spacing="2">★ ★ ★</text>
+    </svg>
+    <h1>Admin Portal</h1>
+    <p>Federal Support Grant · GVN Internal Access</p>
+    <div class="login-group">
+      <label>Admin Username</label>
+      <input type="text" id="loginUser" placeholder="Enter username" autocomplete="off">
+    </div>
+    <div class="login-group">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Access Dashboard →</button>
+    <div class="login-error" id="loginError">⚠ Incorrect credentials. Access denied.</div>
+    <div class="login-badge"><span class="login-dot"></span> Secure Admin Access · GVN Portal</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashWrap">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-logo">
+        <div>
+          <strong>Federal Support Grant — Admin</strong><br>
+          <span>GVN Internal Dashboard · FSG-2025-001</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="admin-badge">🔒 Admin Access</div>
+        <span style="font-size:12px;color:rgba(255,255,255,0.4)" id="adminName"></span>
+        <button class="logout-btn" onclick="doLogout()">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-wrap">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon total">📋</div>
+        <div><div class="stat-num" id="statTotal">—</div><div class="stat-label">Total Applications</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon pending">⏳</div>
+        <div><div class="stat-num" id="statPending">—</div><div class="stat-label">Pending Review</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon approved">✅</div>
+        <div><div class="stat-num" id="statApproved">—</div><div class="stat-label">Approved</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon rejected">❌</div>
+        <div><div class="stat-num" id="statRejected">—</div><div class="stat-label">Rejected</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon amount">💰</div>
+        <div><div class="stat-num" id="statAmount">—</div><div class="stat-label">Total Requested (USD)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN TABLE AREA -->
+  <div class="main-area">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search by name, email, reference, state..." oninput="filterTable()">
+      </div>
+      <select id="filterStatus" onchange="filterTable()">
+        <option value="">All Statuses</option>
+        <option value="pending">Pending</option>
+        <option value="approved">Approved</option>
+        <option value="rejected">Rejected</option>
+        <option value="review">Under Review</option>
+      </select>
+      <select id="filterCategory" onchange="filterTable()">
+        <option value="">All Categories</option>
+        <option>Small Business Development</option>
+        <option>Education &amp; Training</option>
+        <option>Housing Assistance</option>
+        <option>Environmental &amp; Agriculture</option>
+        <option>Healthcare &amp; Community</option>
+        <option>Technology &amp; Innovation</option>
+      </select>
+      <button class="refresh-btn" onclick="loadApplications()">🔄 Refresh</button>
+      <button class="export-btn" onclick="exportCSV()">📥 Export CSV</button>
+      <span class="record-count" id="recordCount">Loading...</span>
+    </div>
+
+    <div class="table-card">
+      <div class="table-wrap">
+        <table id="appTable">
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Applicant</th>
+              <th>Email</th>
+              <th>State / Country</th>
+              <th>Category</th>
+              <th>Amount Requested</th>
+              <th>Credit Score</th>
+              <th>Total Debt</th>
+              <th>Status</th>
+              <th>Submitted</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr class="loading-row"><td colspan="10"><div class="spinner-sm"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APPLICATION DETAIL MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <div>
+        <h3 id="modalName">Applicant Name</h3>
+        <div class="modal-header-ref" id="modalRef">FSG-XXXXXXXX</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</div>
+
+<script>
+const { createClient } = supabase
+const db = createClient(
+  'https://cxjtampdkollasplmzwi.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN4anRhbXBka29sbGFzcGxtendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3NjEwNDcsImV4cCI6MjA5NTMzNzA0N30.a56AwkIj0PvSXuPn1teDAjgDLp-Oi-ghieqVXVOibQQ'
+)
+
+// ── CREDENTIALS (change these to your own) ──
+const ADMINS = {
+  'admin': 'FSG@2025!GVN',
+  'commissioner': 'Grant#2025'
+}
+
+let allApplications = []
+let currentApp = null
+let selectedStatus = ''
+
+// ── LOGIN ──
+function doLogin() {
+  const user = document.getElementById('loginUser').value.trim()
+  const pass = document.getElementById('loginPass').value
+  const err  = document.getElementById('loginError')
+  if (ADMINS[user] && ADMINS[user] === pass) {
+    err.style.display = 'none'
+    document.getElementById('loginWrap').style.display = 'none'
+    document.getElementById('dashWrap').style.display = 'block'
+    document.getElementById('adminName').textContent = user
+    loadApplications()
+  } else {
+    err.style.display = 'block'
+    document.getElementById('loginPass').value = ''
+  }
+}
+
+function doLogout() {
+  document.getElementById('loginWrap').style.display = 'flex'
+  document.getElementById('dashWrap').style.display = 'none'
+  document.getElementById('loginUser').value = ''
+  document.getElementById('loginPass').value = ''
+}
+
+// ── LOAD DATA ──
+async function loadApplications() {
+  document.getElementById('tableBody').innerHTML = '<tr class="loading-row"><td colspan="10"><div class="spinner-sm"></div></td></tr>'
+  const { data, error } = await db
+    .from('applications')
+    .select('*')
+    .order('submitted_at', { ascending: false })
+  if (error) {
+    document.getElementById('tableBody').innerHTML = '<tr><td colspan="10" style="text-align:center;padding:40px;color:#b91c1c">⚠ Error loading data: ' + error.message + '</td></tr>'
+    return
+  }
+  allApplications = data || []
+  updateStats()
+  renderTable(allApplications)
+}
+
+// ── STATS ──
+function updateStats() {
+  const total    = allApplications.length
+  const pending  = allApplications.filter(a => a.status === 'pending').length
+  const approved = allApplications.filter(a => a.status === 'approved').length
+  const rejected = allApplications.filter(a => a.status === 'rejected').length
+  const totalAmt = allApplications.reduce((sum, a) => sum + (parseFloat(a.amount_requested) || 0), 0)
+  document.getElementById('statTotal').textContent    = total
+  document.getElementById('statPending').textContent  = pending
+  document.getElementById('statApproved').textContent = approved
+  document.getElementById('statRejected').textContent = rejected
+  document.getElementById('statAmount').textContent   = '$' + (totalAmt/1000000).toFixed(1) + 'M'
+}
+
+// ── RENDER TABLE ──
+function renderTable(data) {
+  const body = document.getElementById('tableBody')
+  document.getElementById('recordCount').textContent = data.length + ' records'
+  if (!data.length) {
+    body.innerHTML = '<tr><td colspan="10"><div class="no-data"><div class="no-data-icon">📭</div><p>No applications found</p></div></td></tr>'
+    return
+  }
+  body.innerHTML = data.map(a => `
+    <tr onclick="openModal('${a.id}')">
+      <td><span class="td-ref">${a.reference_number || '—'}</span></td>
+      <td><span class="td-name">${a.first_name || ''} ${a.last_name || ''}</span></td>
+      <td style="font-size:13px">${a.email || '—'}</td>
+      <td style="font-size:13px">${a.state || '—'}</td>
+      <td style="font-size:13px">${a.grant_category || '—'}</td>
+      <td><span class="td-amount">$${(parseFloat(a.amount_requested)||0).toLocaleString('en-US')}</span></td>
+      <td style="font-size:12px">${a.credit_score_range || '—'}</td>
+      <td style="font-size:12px">${a.total_debt || '—'}</td>
+      <td>${statusPill(a.status)}</td>
+      <td><span class="td-date">${formatDate(a.submitted_at)}</span></td>
+    </tr>
+  `).join('')
+}
+
+function statusPill(s) {
+  const map = { pending:'⏳ Pending', approved:'✅ Approved', rejected:'❌ Rejected', review:'🔍 Under Review' }
+  const cls = s || 'pending'
+  return `<span class="status-pill ${cls}">${map[cls] || '⏳ Pending'}</span>`
+}
+
+function formatDate(d) {
+  if (!d) return '—'
+  return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+}
+
+// ── FILTER ──
+function filterTable() {
+  const q    = document.getElementById('searchInput').value.toLowerCase()
+  const st   = document.getElementById('filterStatus').value
+  const cat  = document.getElementById('filterCategory').value
+  const filtered = allApplications.filter(a => {
+    const matchQ = !q || [a.reference_number,a.first_name,a.last_name,a.email,a.state,a.grant_category].some(v => (v||'').toLowerCase().includes(q))
+    const matchS = !st  || (a.status||'pending') === st
+    const matchC = !cat || a.grant_category === cat
+    return matchQ && matchS && matchC
+  })
+  renderTable(filtered)
+}
+
+// ── MODAL ──
+function openModal(id) {
+  const a = allApplications.find(x => String(x.id) === String(id))
+  if (!a) return
+  currentApp = a
+  selectedStatus = a.status || 'pending'
+  document.getElementById('modalName').textContent = (a.first_name || '') + ' ' + (a.last_name || '')
+  document.getElementById('modalRef').textContent  = a.reference_number || ''
+
+  const creditClass = getCreditClass(a.credit_score_range)
+
+  document.getElementById('modalBody').innerHTML = `
+    <div class="modal-section">
+      <div class="modal-section-title">Personal Information</div>
+      <div class="detail-grid">
+        <div class="detail-item"><label>Full Name</label><p>${a.first_name||''} ${a.last_name||''}</p></div>
+        <div class="detail-item"><label>Date of Birth</label><p>${a.date_of_birth||'—'}</p></div>
+        <div class="detail-item"><label>Email</label><p>${a.email||'—'}</p></div>
+        <div class="detail-item"><label>Phone</label><p>${a.phone||'—'}</p></div>
+        <div class="detail-item"><label>State / Country</label><p>${a.state||'—'}</p></div>
+        <div class="detail-item"><label>Applicant Type</label><p>${a.applicant_type||'—'}</p></div>
+        <div class="detail-item full"><label>Address</label><p>${a.address||'—'}</p></div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Grant Details</div>
+      <div class="detail-grid">
+        <div class="detail-item"><label>Category</label><p>${a.grant_category||'—'}</p></div>
+        <div class="detail-item"><label>Amount Requested</label><p class="amount">$${(parseFloat(a.amount_requested)||0).toLocaleString('en-US')}</p></div>
+        <div class="detail-item"><label>Annual Income</label><p>${a.income_range||'—'}</p></div>
+        <div class="detail-item"><label>Submitted</label><p>${formatDate(a.submitted_at)}</p></div>
+        <div class="detail-item full"><label>Purpose of Grant</label><p>${a.purpose||'—'}</p></div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Financial Profile</div>
+      <div class="detail-grid-3">
+        <div class="detail-item full">
+          <label>Credit Score Range</label>
+          <div class="credit-display" style="margin-top:6px">
+            <p style="min-width:120px;font-weight:700">${a.credit_score_range||'Not provided'}</p>
+            <div class="credit-bar"><div class="credit-fill ${creditClass}"></div></div>
+          </div>
+        </div>
+        <div class="detail-item"><label>Number of Credit Cards</label><p>${a.num_credit_cards||'—'}</p></div>
+        <div class="detail-item"><label>Credit Card Debt</label><p>${a.credit_card_debt||'—'}</p></div>
+        <div class="detail-item"><label>Total Debt / Loans</label><p>${a.total_debt||'—'}</p></div>
+        <div class="detail-item"><label>Monthly Debt Payments</label><p>${a.monthly_debt_payments||'—'}</p></div>
+        <div class="detail-item"><label>Bankruptcy History</label><p>${a.bankruptcy_history||'—'}</p></div>
+        <div class="detail-item"><label>Housing Status</label><p>${a.housing_status||'—'}</p></div>
+        <div class="detail-item"><label>Late Payments</label><p>${a.late_payments||'—'}</p></div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Application Management</div>
+      <div class="status-update">
+        <h4>Update Application Status</h4>
+        <div class="status-btns">
+          <button class="status-btn pending ${selectedStatus==='pending'?'active':''}" onclick="setStatus('pending')">⏳ Pending</button>
+          <button class="status-btn review ${selectedStatus==='review'?'active':''}" onclick="setStatus('review')">🔍 Under Review</button>
+          <button class="status-btn approved ${selectedStatus==='approved'?'active':''}" onclick="setStatus('approved')">✅ Approve</button>
+          <button class="status-btn rejected ${selectedStatus==='rejected'?'active':''}" onclick="setStatus('rejected')">❌ Reject</button>
+        </div>
+        <textarea class="notes-area" id="adminNotes" placeholder="Add internal notes about this application...">${a.admin_notes||''}</textarea>
+        <button class="save-btn" onclick="saveStatus()">Save Changes</button>
+        <span class="save-success" id="saveSuccess">✓ Saved successfully</span>
+      </div>
+    </div>
+  `
+  document.getElementById('modalOverlay').classList.add('open')
+}
+
+function getCreditClass(range) {
+  if (!range) return ''
+  if (range.includes('300')) return 'poor'
+  if (range.includes('580')) return 'fair'
+  if (range.includes('670')) return 'good'
+  if (range.includes('740')) return 'very-good'
+  if (range.includes('800')) return 'exceptional'
+  return 'good'
+}
+
+function setStatus(s) {
+  selectedStatus = s
+  document.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'))
+  document.querySelectorAll('.status-btn.' + s).forEach(b => b.classList.add('active'))
+}
+
+async function saveStatus() {
+  if (!currentApp) return
+  const notes = document.getElementById('adminNotes').value
+  const { error } = await db.from('applications').update({
+    status: selectedStatus,
+    admin_notes: notes,
+    reviewed_at: new Date().toISOString()
+  }).eq('id', currentApp.id)
+
+  if (!error) {
+    const idx = allApplications.findIndex(a => a.id === currentApp.id)
+    if (idx > -1) {
+      allApplications[idx].status = selectedStatus
+      allApplications[idx].admin_notes = notes
+    }
+    updateStats()
+    filterTable()
+    document.getElementById('saveSuccess').style.display = 'inline'
+    setTimeout(() => document.getElementById('saveSuccess').style.display = 'none', 2500)
+  }
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open')
+  currentApp = null
+}
+
+// ── EXPORT CSV ──
+function exportCSV() {
+  if (!allApplications.length) { alert('No data to export.'); return }
+  const headers = ['Reference','First Name','Last Name','Email','Phone','State','Address','Applicant Type','Category','Amount','Income','Credit Score','Credit Cards','Credit Card Debt','Total Debt','Monthly Payments','Bankruptcy','Housing','Late Payments','Status','Submitted']
+  const rows = allApplications.map(a => [
+    a.reference_number,a.first_name,a.last_name,a.email,a.phone,a.state,a.address,
+    a.applicant_type,a.grant_category,a.amount_requested,a.income_range,
+    a.credit_score_range,a.num_credit_cards,a.credit_card_debt,a.total_debt,
+    a.monthly_debt_payments,a.bankruptcy_history,a.housing_status,a.late_payments,
+    a.status,a.submitted_at
+  ].map(v => '"'+(v||'').toString().replace(/"/g,'""')+'"'))
+  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n')
+  const blob = new Blob([csv], {type:'text/csv'})
+  const url  = URL.createObjectURL(blob)
+  const a    = document.createElement('a')
+  a.href = url; a.download = 'FSG-Applications-' + new Date().toISOString().slice(0,10) + '.csv'
+  a.click(); URL.revokeObjectURL(url)
+}
+
+// keyboard shortcut
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal() })
+</script>
+</body>
+</html>
